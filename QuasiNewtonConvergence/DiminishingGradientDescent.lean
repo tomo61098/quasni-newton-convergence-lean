@@ -194,7 +194,7 @@ theorem sqrtStepSize_sum_diverges :
       Filter.atTop Filter.atTop := by
   simpa using sqrtStepSize_tail_sum_diverges 0
 
-private theorem sqrtStepSize_tendsto_zero :
+theorem sqrtStepSize_tendsto_zero :
     Filter.Tendsto sqrtStepSize Filter.atTop (nhds 0) := by
   have hcast : Filter.Tendsto (fun k : ℕ => (k : ℝ) + 1)
       Filter.atTop Filter.atTop := by

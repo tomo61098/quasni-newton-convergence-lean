@@ -2,6 +2,9 @@ import Mathlib.Analysis.InnerProductSpace.Basic
 import QuasiNewtonConvergence.LineSearch
 import QuasiNewtonConvergence.GradientDescent
 import QuasiNewtonConvergence.DiminishingGradientDescent
+import QuasiNewtonConvergence.Subgradient
+import QuasiNewtonConvergence.Nesterov
+import QuasiNewtonConvergence.NesterovStrong
 import QuasiNewtonConvergence.StrongConvexMinimizer
 import QuasiNewtonConvergence.WolfeGradientDescent
 

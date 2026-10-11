@@ -29,6 +29,52 @@ The sum of those step lengths diverges, giving convergence of objective values
 for convex objectives. Under strong convexity and a stationary minimizer, the
 iterates converge to that minimizer as well.
 
+`QuasiNewtonConvergence/Subgradient.lean` proves the subgradient method for
+the same step schedule `αₖ = 1/√(k+1)`. Given a minimizer and a uniform bound
+on the chosen subgradients, the best objective value among the first `n`
+iterates converges to the minimum. The proof establishes the standard weighted
+gap estimate
+`2∑_{k<n} αₖ(f(xₖ)-f(x★)) ≤ ‖x₀-x★‖² + G²∑_{k<n} αₖ²` and shows that the
+sum of squared steps divided by the sum of steps tends to zero. The theorem
+does not assert convergence of every iterate.
+
+For a strongly convex objective, the same file proves more: if the selected
+subgradients satisfy the strong subgradient inequality and remain uniformly
+bounded, then every iterate converges to the minimizer under the same
+`αₖ = 1/√(k+1)` schedule. The objective values converge as well. The proof
+uses the recurrence
+`‖xₖ₊₁-x★‖² ≤ (1-μ αₖ)‖xₖ-x★‖² + G²αₖ²` and needs no
+differentiability or smoothness assumption.
+
+`QuasiNewtonConvergence/Nesterov.lean` proves the standard smooth convex
+accelerated gradient method in its three-sequence form. Its explicit bound is
+`f(xₙ)-f(x★) ≤ 2L‖x₀-x★‖²/[n(n+1)]` for `n ≥ 1`; hence objective values
+converge to the minimum. The assumptions are `L > 0`, the smooth upper
+inequality, the convex first-order inequality, and a minimizer. Nocedal and
+Wright's *Numerical Optimization* mentions Nesterov's optimal bound in its
+discussion of conjugate gradients but does not present this accelerated
+gradient algorithm or theorem. The result formalized here is the standard
+smooth convex Nesterov acceleration result, not a numbered theorem from that
+book.
+
+Under smooth strong convexity, the same Nesterov sequence has convergent
+iterates. Restarting the accelerated sequence every `m` steps gives a linear
+rate at restart points: if `μ m(m+1) ≥ 8L`, each block at least halves the
+objective gap, so after `r` blocks it is at most `2⁻ʳ` times the initial gap.
+Such a finite `m` always exists. On a complete real inner product space, the
+formalized convergence theorems obtain the minimizer from smooth strong
+convexity; callers need not supply it. This is a restarted acceleration
+guarantee. The direct constant-momentum result is in the next module.
+
+`QuasiNewtonConvergence/NesterovStrong.lean` formalizes the direct
+constant-momentum strongly convex method in a three-sequence form. With
+`0 < μ ≤ L` and `t = √(μ/L)`, the potential
+`f(xₖ)-f(x★) + (μ/2)‖zₖ-x★‖²` contracts by `1-t` at every iteration. Thus
+`f(xₖ)-f(x★) ≤ (1-√(μ/L))^k [f(x₀)-f(x★)+(μ/2)‖x₀-x★‖²]`.
+Both objective values and iterates converge to the minimizer. On a complete
+real inner product space, the theorem obtains that minimizer from smooth
+strong convexity.
+
 `QuasiNewtonConvergence/StrongConvexMinimizer.lean` proves that, on a complete
 real inner product space, a smooth strongly convex objective has a unique
 stationary global minimizer. It constructs the minimizer as the limit of a
@@ -75,4 +121,10 @@ once a complete result exists, so the metadata cannot imply a completed proof.
 
 - Jorge Nocedal and Stephen J. Wright, *Numerical Optimization*, second
   edition, Springer, 2006, Chapter 6, Theorems 6.5 and 6.6.
+- Yurii Nesterov, "A method of solving a convex programming problem with
+  convergence rate O(1/k²)," *Doklady Akademii Nauk SSSR* 269 (1983),
+  543–547.
+- Alexandre d'Aspremont, Damien Scieur, and Adrien Taylor,
+  [*Acceleration Methods*](https://accelerationmethods.github.io/AccelerationMethodsWebsite/acceleration_monograph_v3.pdf),
+  Section 4.5, Algorithm 15 and Theorem 4.14.
 - [Mathlib](https://github.com/leanprover-community/mathlib4).
