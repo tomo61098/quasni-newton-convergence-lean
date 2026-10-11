@@ -117,7 +117,45 @@ placeholders, independently mirrored in a Challenge module, and checked by
 Comparator. A `formalization.yaml` and Comparator configuration will be added
 once a complete result exists, so the metadata cannot imply a completed proof.
 
+## Newton's method
+
+`QuasiNewtonConvergence/Newton.lean` proves local quadratic convergence of
+full Newton steps. A globally Lipschitz Hessian yields a quadratic gradient remainder;
+a uniformly bounded inverse Hessian near a stationary point then gives
+`‖xₖ₊₁ - x⋆‖ ≤ (B L) ‖xₖ - x⋆‖²`. If the starting error is at most `r`
+and `B L r < 1`, the iterates converge to `x⋆`. The proof uses the weaker
+remainder constant `L` in place of the sharp `L/2`.
+
+## Broyden-class updates and conditional convergence
+
+`QuasiNewtonConvergence/BroydenUpdates.lean` implements Hessian-form BFGS,
+the Broyden class with parameter `φ`, its DFP endpoint `φ = 1`, and SR1 with
+the textbook relative-denominator safeguard. The formulas are bundled as
+linear maps. Lean verifies their secant equations when updates are taken,
+and proves symmetry and positive definiteness are preserved through any
+sequence of BFGS, DFP, or nonnegative-parameter Broyden updates with
+positive secant curvature. SR1 preserves symmetry but can lose positivity.
+
+`QuasiNewtonConvergence/BroydenConvergence.lean` proves a conditional
+line-search convergence theorem for quasi-Newton directions `pₖ = -Hₖ∇f(xₖ)`.
+With weak Wolfe steps, a Lipschitz gradient, a lower bounded objective,
+uniform inverse-approximation bounds `m‖gₖ‖² ≤ ⟪gₖ,Hₖgₖ⟫` and `‖Hₖ‖ ≤ M`,
+the gradient norms tend to zero; stationary iterates are handled directly. Under strong
+convexity, the iterates and objective values converge to a stationary
+minimizer. A separate theorem proves a superlinear ratio for full steps when
+the Hessian approximation error along the current displacement vanishes
+relative to that displacement. These approximation and spectral bounds are
+hypotheses, not consequences proved for the update sequences. Thus these
+results do not yet establish Theorem 6.5
+for unrestricted BFGS iterates or its restricted Broyden-class extension.
+Nocedal–Wright excludes the DFP endpoint from that extension and analyzes
+SR1 separately with a trust-region method.
+
 ## Sources
+
+- Jorge Nocedal and Stephen J. Wright, *Numerical Optimization*, second
+  edition, Springer, 2006, Chapter 3, Theorem 3.7 (local quadratic Newton
+  convergence).
 
 - Jorge Nocedal and Stephen J. Wright, *Numerical Optimization*, second
   edition, Springer, 2006, Chapter 6, Theorems 6.5 and 6.6.

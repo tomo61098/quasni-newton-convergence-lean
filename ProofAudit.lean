@@ -45,3 +45,23 @@ import QuasiNewtonConvergence
 #print axioms QuasiNewtonConvergence.strongNesterov_sqrt_geometric_rate
 #print axioms QuasiNewtonConvergence.strongNesterov_sqrt_tendsto
 #print axioms QuasiNewtonConvergence.strongNesterov_sqrt_converges
+
+#print axioms QuasiNewtonConvergence.newton_gradient_remainder
+#print axioms QuasiNewtonConvergence.newtonStep_quadratic_bound
+#print axioms QuasiNewtonConvergence.newton_local_quadratic_convergence
+
+#print axioms QuasiNewtonConvergence.broydenVector_orthogonal
+#print axioms QuasiNewtonConvergence.broydenUpdate_secant
+#print axioms QuasiNewtonConvergence.dfpUpdate_secant
+#print axioms QuasiNewtonConvergence.sr1Update_secant
+#print axioms QuasiNewtonConvergence.sr1UpdateOrSkip_secant
+#print axioms QuasiNewtonConvergence.quasiNewton_direction_weight_bound
+#print axioms QuasiNewtonConvergence.quasiNewton_wolfe_gradient_tendsto
+#print axioms QuasiNewtonConvergence.quasiNewton_wolfe_strong_converges
+#print axioms QuasiNewtonConvergence.bfgsUpdateMap_positive
+#print axioms QuasiNewtonConvergence.dfpUpdateMap_positive
+#print axioms QuasiNewtonConvergence.broydenSequence_positive
+#print axioms QuasiNewtonConvergence.sr1UpdateSafeguardedMap_secant
+#print axioms QuasiNewtonConvergence.quasiNewton_wolfe_gradient_tendsto_all
+#print axioms QuasiNewtonConvergence.QuasiNewtonRun.strong_converges
+#print axioms QuasiNewtonConvergence.quasiNewton_full_step_superlinear
