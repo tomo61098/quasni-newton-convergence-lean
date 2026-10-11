@@ -108,9 +108,19 @@ line search produces weak Wolfe steps and uses a global Lipschitz gradient
 bound; later work will derive the needed bound from the book's Hessian
 assumptions on the relevant level set.
 
-Theorem 6.5 still requires the BFGS trace/determinant estimate, the positive
-angle subsequence, and the strong convexity argument. Theorem 6.6 requires
-the Dennis--Moré characterization and its BFGS summability argument.
+The Lean proof of Theorem 6.5 still requires the finite-dimensional
+determinant identity, the Hessian bounds on the level set, and the final
+Zoutendijk-to-iterate argument. Theorem 6.6 requires the Dennis--Moré
+characterization and its BFGS summability argument.
+
+A complete mathematical proof of Theorem 6.5 is in
+[BFGSGlobalProof.md](BFGSGlobalProof.md). Its trace update identity is now
+formalized in `QuasiNewtonConvergence/BFGSMatrix.lean`. The scalar
+trace–determinant potential recurrence and its no-angle-collapse consequence
+are formalized in `QuasiNewtonConvergence/BFGSGlobal.lean`. The finite-dimensional
+determinant lemma has a proved two-dimensional reduction; connecting its
+entries to the bundled BFGS map and completing the level-set iterate theorem
+remain open in Lean.
 
 No Palomar submission is ready until the full statements are proved without
 placeholders, independently mirrored in a Challenge module, and checked by

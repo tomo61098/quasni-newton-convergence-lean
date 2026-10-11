@@ -2,6 +2,8 @@ import Mathlib.Analysis.InnerProductSpace.Basic
 import QuasiNewtonConvergence.LineSearch
 import QuasiNewtonConvergence.BroydenUpdates
 import QuasiNewtonConvergence.BroydenConvergence
+import QuasiNewtonConvergence.BFGSGlobal
+import QuasiNewtonConvergence.BFGSMatrix
 import QuasiNewtonConvergence.GradientDescent
 import QuasiNewtonConvergence.DiminishingGradientDescent
 import QuasiNewtonConvergence.Subgradient

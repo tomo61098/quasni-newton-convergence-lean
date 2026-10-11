@@ -65,3 +65,7 @@ import QuasiNewtonConvergence
 #print axioms QuasiNewtonConvergence.quasiNewton_wolfe_gradient_tendsto_all
 #print axioms QuasiNewtonConvergence.QuasiNewtonRun.strong_converges
 #print axioms QuasiNewtonConvergence.quasiNewton_full_step_superlinear
+#print axioms QuasiNewtonConvergence.bfgs_scalar_potential_step
+#print axioms QuasiNewtonConvergence.bfgs_angle_not_tendsto_zero
+#print axioms QuasiNewtonConvergence.bfgs_trace_update
+#print axioms QuasiNewtonConvergence.bfgs_det_rank_two_aux
