@@ -69,3 +69,13 @@ import QuasiNewtonConvergence
 #print axioms QuasiNewtonConvergence.bfgs_angle_not_tendsto_zero
 #print axioms QuasiNewtonConvergence.bfgs_trace_update
 #print axioms QuasiNewtonConvergence.bfgs_det_rank_two_aux
+#print axioms QuasiNewtonConvergence.proximal_three_point
+#print axioms QuasiNewtonConvergence.proximalGradient_convex_rate
+#print axioms QuasiNewtonConvergence.proximalGradient_strong_distance_rate
+#print axioms QuasiNewtonConvergence.proximalGradient_strong_objective_rate
+#print axioms QuasiNewtonConvergence.proximalNesterov_weighted_rate
+#print axioms QuasiNewtonConvergence.proximalNesterov_quadratic_rate
+#print axioms QuasiNewtonConvergence.restartedProximalNesterov_strong_rate
+#print axioms QuasiNewtonConvergence.proximalBFGS_descent
+#print axioms QuasiNewtonConvergence.metricProximal_steps_summable
+#print axioms QuasiNewtonConvergence.metricProximal_linear_rate

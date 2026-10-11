@@ -12,6 +12,26 @@ update and line search results are developed in this repository using mathlib.
 
 ## Current formalized results
 
+`QuasiNewtonConvergence/ProximalGradient.lean` treats a composite objective
+`F = f + g`, where `f` has an `L`-smooth convex gradient and the exact
+proximal subproblem satisfies its variational optimality condition. It proves
+the three-point inequality, the last-iterate `O(1/k)` bound, and geometric
+distance and objective bounds when `f` is strongly convex. The minimizer is
+supplied to the rate theorems.
+
+`QuasiNewtonConvergence/ProximalNesterov.lean` proves the accelerated
+three-sequence potential and its `O(1/k²)` objective bound for standard
+quadratically growing FISTA weights. The quadratic growth of the weights is
+an explicit hypothesis of the rate theorem. It also proves the geometric
+objective bound for fixed-length restarts under quadratic growth of `F`.
+
+`QuasiNewtonConvergence/ProximalBFGS.lean` proves descent and summability of
+squared steps for variable-metric proximal updates, including BFGS metrics,
+under a uniform lower metric bound. An additional composite error bound yields
+a geometric objective rate. These bounds require assumptions beyond the BFGS
+secant update; positive definiteness of each update by itself does not give a
+uniform spectral bound.
+
 `QuasiNewtonConvergence/GradientDescent.lean` proves convergence of fixed-step
 gradient descent with step size `1/L`. For an `L`-smooth convex objective, it
 establishes the objective gap bound

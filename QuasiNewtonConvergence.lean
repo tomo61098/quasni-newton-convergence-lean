@@ -12,5 +12,8 @@ import QuasiNewtonConvergence.NesterovStrong
 import QuasiNewtonConvergence.Newton
 import QuasiNewtonConvergence.StrongConvexMinimizer
 import QuasiNewtonConvergence.WolfeGradientDescent
+import QuasiNewtonConvergence.ProximalGradient
+import QuasiNewtonConvergence.ProximalNesterov
+import QuasiNewtonConvergence.ProximalBFGS
 
 /-! Quasi-Newton update formulas and their convergence results are imported above. -/
