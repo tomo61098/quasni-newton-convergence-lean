@@ -10,10 +10,19 @@ The project follows the package and submission conventions of the sibling
 `c-separated-np-complete-lean` repository. It pins Lean and mathlib. The BFGS
 update and line search results are developed in this repository using mathlib.
 
-A separate mathematical proof of polynomial bit complexity for Karmarkar's
-projective interior point method is in
-[KarmarkarPolynomialTimeProof.md](KarmarkarPolynomialTimeProof.md). It is not
-yet a Lean formalization.
+A mathematical proof of polynomial bit complexity for Karmarkar's projective
+interior point method is in
+[KarmarkarPolynomialTimeProof.md](KarmarkarPolynomialTimeProof.md).
+`QuasiNewtonConvergence/KarmarkarProjective.lean` now formalizes the fractional
+projective map and its inverse, feasibility preservation, exact potential
+cancellation, a barrier bound, and an exponential objective rate under the
+projected-cost ratio and coordinate bounds.
+`QuasiNewtonConvergence/KarmarkarProjection.lean` proves the projected-cost
+ratio from the two orthogonal-projection identities and the simplex-radius
+bound. It also derives the coordinate and squared-radius bounds from a
+normalized zero-sum quarter-radius step. The matrix projection construction,
+rational vertex gap, and polynomial-bit implementation are not yet proved in Lean;
+these files do not assert the full polynomial-time result.
 
 ## Current formalized results
 
@@ -56,6 +65,14 @@ that the directional Dennis–Moré ratio tends to zero when the determinant
 recurrence, nonnegative potential, and summable secant-error bound hold. The
 determinant recurrence is still an explicit hypothesis, so this is not yet
 an unconditional BFGS superlinear convergence theorem.
+
+`QuasiNewtonConvergence/StrongWolfeCounterexample.lean` proves that strong
+Wolfe line search alone cannot imply superlinear BFGS convergence. On the
+positive quadratic `f(x) = x²/2`, the exact Hessian remains unchanged by BFGS,
+but a fixed half step satisfies strong Wolfe and gives error ratio `1/2` at
+every iteration. Superlinear conclusions require further assumptions that
+force asymptotically full steps, together with the directional Dennis–Moré
+condition and the usual local regularity hypotheses.
 
 `QuasiNewtonConvergence/Bregman.lean` defines a Bregman divergence, proves its
 three-point identity, and establishes `O(1/k)` last-iterate objective bounds

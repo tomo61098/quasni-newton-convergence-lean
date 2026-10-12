@@ -1,7 +1,8 @@
 # Why Karmarkar's interior point algorithm is polynomial time
 
-This is a proof for Karmarkar's **projective** algorithm, not a proof for a
-later path following method. It follows the canonical problem and potential
+This is a proof for Karmarkar's **projective** algorithm. Its defining map is
+the fractional transformation (1), whose denominator cancels in the invariant
+potential calculation (5). It follows the canonical problem and potential
 argument in [Karmarkar, *A new polynomial-time algorithm for linear
 programming* (1984)](https://www.stat.uchicago.edu/~lekheng/courses/302/classics/karmarkar.pdf),
 Sections 2–5. The elementary estimate below gives a slightly different
@@ -21,7 +22,7 @@ gives the sharper implementation count \(O(n^{3.5}L)\) arithmetic operations
 on \(O(L)\)-bit numbers, where \(L\) is its determinant-based input-size
 parameter.
 
-The canonical problem is
+The canonical decision problem is
 
 \[
  P=\{x\in\mathbb R^n:Ax=0,\;\mathbf1^Tx=1,\;x\ge0\},
@@ -29,13 +30,14 @@ The canonical problem is
 \]
 
 The data are rational, the center \(x^{(0)}=\mathbf1/n\) belongs to \(P\),
-and the minimum is zero. We assume \(c^Tx^{(0)}>0\); otherwise the starting
-point is already optimal. We take \(n\ge2\), since \(n=1\) is immediate.
-Since the minimum is zero, \(c^Tx\ge0\) on
-\(P\). This normalization is essential when the logarithm of the objective
-is used. Section 5 of the paper supplies a polynomial-size reduction from a
-general rational LP, including a strictly feasible artificial start and a
-zero-target feasibility problem. We prove the core bound first.
+and the task is to decide whether the minimum is zero or positive. We assume
+\(c^Tx^{(0)}>0\); otherwise the starting point is already a zero. We take
+\(n\ge2\), since \(n=1\) is immediate. The canonical reduction ensures
+\(c^Tx\ge0\) on \(P\), which is essential for the logarithm of the objective.
+Section 5 of the paper supplies a polynomial-size reduction from a general
+rational LP, including a strictly feasible artificial start and a zero-target
+feasibility problem. We first analyze the zero-target case and then the
+positive-minimum case.
 
 ## One projective step
 
@@ -63,6 +65,10 @@ it would make the transformed objective constant on the feasible affine
 space. The radius \(r\) is the inscribed radius of the standard simplex
 in its affine hull. Thus (2) is feasible and strictly positive. Applying
 the inverse of (1) gives the next iterate \(a^+\).
+
+The normalization denominator \(\sum_j a_jy_j\) depends on the new point.
+The inverse map preserves both \(Ax=0\) and \(\mathbf1^Tx=1\); its denominator
+is essential to the potential identity below.
 
 More precisely, if \(d=y-u\), then \(\mathbf1^Td=0\) and
 \(\|d\|=\alpha r\). Cauchy–Schwarz applied to
@@ -110,8 +116,9 @@ fractional objective decrease in the transformed space is
  \ge\frac{\alpha r}{R}=\frac\alpha{n-1}.
 \]
 
-We have \(0<\theta<1\), because \(y\) is strictly feasible and the
-objective is nonnegative on the whole feasible polytope. Using
+In the zero-target case \(0<\theta<1\): a positive feasible point cannot
+have zero objective unless the objective vanishes throughout the feasible
+affine space, contrary to \(c^Ta>0\). Using
 \(\log(1-\theta)\le-\theta\), the first term in (5) is at most
 \(-n\alpha/(n-1)\le-\alpha\).
 
@@ -162,8 +169,9 @@ Thus \(O(n\log(c^Tx^{(0)}/\varepsilon))\) steps make the objective at
 most \(\varepsilon\).
 
 For rational data, clear denominators to obtain integer constraint
-coefficients. Every vertex is a basic solution, so Cramer's rule expresses
-its coordinates with integer numerators and a determinant denominator.
+coefficients **and an integer objective vector**. Every vertex is a basic
+solution, so Cramer's rule expresses its coordinates with integer numerators
+and a nonzero integer basis determinant.
 Hadamard's inequality bounds the absolute determinant by a number
 \(D\le2^{\operatorname{poly}(n,B)}\). Consequently, a strictly positive
 objective value at a vertex is at least \(1/D\). Choose
@@ -175,6 +183,16 @@ linear-algebra steps are needed. The resulting vertex has objective below
 optimal rational certificate. Since \(\log D=\operatorname{poly}(n,B)\),
 (7) gives a polynomial iteration bound. Karmarkar's determinant-based
 parameter \(L\) packages these bounds to obtain \(O(nL)\) iterations.
+
+The same bound handles a **positive minimum**. The algorithm checks whether
+each step gives the guaranteed potential decrease. If the check fails, (6)
+implies that the minimum is positive. If every check succeeded for more than
+\(\max\{0,6n\log(Dc^Tx^{(0)})\}\) steps, (7) would give an interior point with objective
+below \(1/D\). Moving to a vertex without increasing the objective would
+then yield a zero-objective vertex, contradicting a positive minimum. Hence
+within polynomially many steps either a zero certificate is found or a failed
+decrease certifies a positive minimum. This is the canonical decision
+procedure.
 
 ## Why this is a bit-complexity result
 
@@ -204,24 +222,32 @@ of (4),
  \nabla\Phi(x)=\frac{nc}{c^Tx}-(1/x_1,\ldots,1/x_n),
 \]
 
-has norm at most \(2^{\operatorname{poly}(n,B)}\). Hence rounding to
-\(2^{-\operatorname{poly}(n,B)}\) absolute accuracy changes the potential by
-less than, say, \(1/24\), leaving a decrease of at least \(1/8\) per step.
+has norm at most \(2^{\operatorname{poly}(n,B,K)}\). Hence rounding to
+\(2^{-\operatorname{poly}(n,B,K)}\) absolute accuracy changes the potential by
+less than \(1/48\). Approximation of the projected step to the same accuracy
+costs another \(1/48\), leaving a decrease of at least \(1/8\) per step.
 If the exact output instead has objective below \(\varepsilon/2\), choose
 the rounding accuracy also below
 \(\varepsilon/(2n\|c\|_\infty)\); its rounded objective is then at most
 \(\varepsilon\), and the algorithm stops.
 Compute a rational basis for the fixed affine feasible space by Gaussian
-elimination, round coordinates in that basis, and choose the precision high
-enough to absorb the basis condition number. Rational linear solves,
-projection, and square-root approximation to this many bits all take
-polynomial bit time. The coefficients in the linear systems have polynomial
-bit length after each rounding. The projected direction does not become
+elimination, round coordinates in that basis to a common dyadic grid of
+\(P=\operatorname{poly}(n,B,K)\) bits, and choose \(P\) large enough to absorb
+the basis condition number. The grid bounds every stored iterate's bit length
+by \(O(P+\operatorname{poly}(n,B))\), independently of earlier denominators.
+For each stored iterate, the transformed matrix and cost vector therefore
+have polynomial bit length. A rational linear solve computes the exact
+projection \(p\); Cramer's rule and Hadamard's bound give polynomial bit
+length for its coordinates. Square-root approximation and normalization to
+\(P\) bits take polynomial bit time. The projected direction does not become
 too small to normalize before termination: the estimate above gives
 \(\|p\|\ge(Dc)^Tu/R=(c^Ta)/(nR)\ge\varepsilon/(nR)\).
-This yields a polynomial-bit implementation
-of the simple \(O(n^3)\)-arithmetic-operation step, hence a polynomial total
-running time.
+Use a rational scalar multiple of the exact rational vector \(p\), so the
+approximate projected point remains in the transformed feasible affine space.
+Round its inverse projective image in the original affine feasible space.
+Thus each step consists of polynomially many operations on polynomial-bit
+rationals. With the verified decrease \(1/8\), increase the iteration cap by
+the corresponding constant factor; it remains polynomial.
 
 The original paper optimizes the linear algebra further: Sections 6.1–6.3
 use rank-one inverse updates, obtaining \(O(n^{2.5})\) arithmetic operations

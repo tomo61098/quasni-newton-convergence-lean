@@ -116,3 +116,21 @@ import QuasiNewtonConvergence
 #print axioms QuasiNewtonConvergence.bregmanProximalIterate_minimizes
 
 #print axioms QuasiNewtonConvergence.exists_bregmanProximal_steps
+
+#print axioms QuasiNewtonConvergence.quadratic_half_step_bfgs_counterexample
+
+#print axioms QuasiNewtonConvergence.karmarkarForward_inverse
+
+#print axioms QuasiNewtonConvergence.karmarkarInverse_forward
+
+#print axioms QuasiNewtonConvergence.karmarkarPotential_projective_change
+
+#print axioms QuasiNewtonConvergence.karmarkar_projective_step_drop_of_coordinates
+
+#print axioms QuasiNewtonConvergence.karmarkar_projective_run_rate
+
+#print axioms QuasiNewtonConvergence.karmarkar_exponential_crosses_gap
+
+#print axioms QuasiNewtonConvergence.karmarkar_projected_cost_ratio_quarter
+
+#print axioms QuasiNewtonConvergence.karmarkar_quarter_step_coordinates

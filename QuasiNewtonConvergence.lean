@@ -18,7 +18,10 @@ import QuasiNewtonConvergence.ProximalBFGS
 import QuasiNewtonConvergence.DennisMoreProximal
 import QuasiNewtonConvergence.BFGSDennisMore
 import QuasiNewtonConvergence.BFGSDirectional
+import QuasiNewtonConvergence.StrongWolfeCounterexample
 import QuasiNewtonConvergence.Bregman
 import QuasiNewtonConvergence.BregmanExistence
+import QuasiNewtonConvergence.KarmarkarProjective
+import QuasiNewtonConvergence.KarmarkarProjection
 
 /-! Quasi-Newton update formulas and their convergence results are imported above. -/
