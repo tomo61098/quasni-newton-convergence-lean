@@ -60,6 +60,22 @@ domain and its new decrement is at most
  \leq \left(\frac{21}{43}\right)^2<\frac14.
 \]
 
+For this specific log barrier, the Newton estimate has a direct stronger
+proof. Write the full Newton direction as \(d\), set \(u_i=d_i/x_i\), and
+let \(q\) be the equality-constraint multiplier vector, so that
+\[
+ t c_i-\frac1{x_i}+\frac{d_i}{x_i^2}=q_i.
+\]
+At the new point \(x_i^+=x_i+d_i=x_i(1+u_i)\), exact algebra gives
+\[
+ x_i^+\left(t c_i-\frac1{x_i^+}-q_i\right)=-u_i^2.
+\]
+Since \(\sum_i u_i^2=\lambda^2<1\), every \(x_i^+>0\). The scaled
+residual has Euclidean norm
+\((\sum_i u_i^4)^{1/2}\le\sum_i u_i^2=\lambda^2\);
+minimizing over multipliers can only reduce it. Hence
+\(\lambda_t(x^+)\le\lambda^2<1/4\) for \(\lambda\le21/64\).
+
 Induction proves strict feasibility and the \(1/4\) neighborhood invariant
 for every iterate. The self-concordant Newton estimate is the essential
 algorithmic lemma; it cannot be replaced by a claim that each subproblem is
@@ -116,12 +132,15 @@ implementation analysis.
 
 ## Lean status
 
-`QuasiNewtonConvergence/PrimalPathFollowing.lean` proves the exact and
-coordinatewise residual gap inequalities and the logarithmic iteration
-thresholds for sequences satisfying the stated centrality conditions. The
-self-concordant full-Newton neighborhood lemma, the construction of the
-multiplier/residual from the Newton decrement, and the induction tying the
-defined Newton updates to those conditions are not yet formalized in Lean.
+The PrimalPathFollowing Lean module proves the exact and coordinatewise
+residual gap inequalities and the logarithmic iteration thresholds for
+sequences satisfying the stated centrality conditions. The
+LogBarrierNewtonInvariant Lean module proves the full-step residual
+identity, positivity and a one-quarter residual bound from a certified
+Newton direction, and the projected short-step perturbation bound
+\(1/4\to21/64\). The identification of that projection with the
+constrained Newton direction and the resulting iterate-level induction
+are not yet formalized in Lean.
 
 The analytic short-step argument follows the classical self-concordant barrier
 method; see [Vishnoi's interior-point lecture notes](https://theory.epfl.ch/vishnoi/CargeseLectures.pdf)

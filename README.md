@@ -41,6 +41,16 @@ attained auxiliary optimum has value zero exactly when the original LP is
 feasible. It also proves the ordinary-slack equivalence for inequalities and
 a signed-artificial-variable construction for arbitrary `b`.
 
+`QuasiNewtonConvergence/KarmarkarBitBounds.lean` proves a polynomial
+determinant-size bound, an integer-objective vertex gap under a common
+denominator, Cramer's signed denominator formula for integer systems,
+coordinate retention, and a dyadic storage threshold.
+`QuasiNewtonConvergence/LogBarrierNewtonInvariant.lean` proves the exact
+full-step log-barrier residual identity, positivity and residual control from
+a certified Newton direction, and the projected short-step parameter bound.
+The LP-vertex reduction, finite-precision projective implementation, and
+projection-to-Newton-direction bridge remain outside Lean.
+
 ## Current formalized results
 
 `QuasiNewtonConvergence/ProximalGradient.lean` treats a composite objective

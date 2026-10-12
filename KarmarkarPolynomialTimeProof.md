@@ -184,6 +184,15 @@ optimal rational certificate. Since \(\log D=\operatorname{poly}(n,B)\),
 (7) gives a polynomial iteration bound. Karmarkar's determinant-based
 parameter \(L\) packages these bounds to obtain \(O(nL)\) iterations.
 
+For an explicit coarse bound, if an integer basis matrix is \(m\times m\)
+and each entry has magnitude at most \(2^b\), the Leibniz formula gives
+\[
+ |\det M|\le m!\,(2^b)^m\le 2^{m(m+b)}.
+\]
+The second inequality uses \(m!\le m^m\) and \(m\le2^m\). This bound,
+though weaker than Hadamard's inequality, already makes the vertex gap
+and its logarithm polynomial in the input size.
+
 The same bound handles a **positive minimum**. The algorithm checks whether
 each step gives the guaranteed potential decrease. If the check fails, (6)
 implies that the minimum is positive. If every check succeeded for more than
@@ -254,3 +263,16 @@ use rank-one inverse updates, obtaining \(O(n^{2.5})\) arithmetic operations
 per step on average. Its abstract and Section 1.6 state the resulting
 \(O(n^{3.5}L)\) arithmetic operations on \(O(L)\)-bit numbers. This sharper
 bound is separate from the simpler polynomial implementation proved above.
+
+## Lean status
+
+The KarmarkarBitBounds Lean module proves the integer common-denominator
+objective identity and positive gap, the explicit \(2^{m(m+b)}\)
+determinant bound, the three-fifths projective coordinate retention estimate,
+its binary-scale iterate margin, a dyadic-numerator storage threshold, and
+Cramer's signed common-denominator representation for nonsingular integer
+systems. The Lean development still lacks the bridge from every LP vertex
+to a suitable nonsingular integer system, feasibility-preserving rational rounding
+of every projective step, and a formal Turing cost model. Thus the full
+polynomial *bit-complexity* theorem above is a mathematical proof, not yet
+a complete Lean theorem.

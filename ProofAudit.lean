@@ -160,3 +160,15 @@ import QuasiNewtonConvergence
 #print axioms QuasiNewtonConvergence.phaseOne_optimum_zero_iff_original_feasible
 
 #print axioms QuasiNewtonConvergence.phaseOne_signed_feasible_iff_zero_objective
+
+#print axioms QuasiNewtonConvergence.karmarkar_positive_gap_from_bit_bound
+
+#print axioms QuasiNewtonConvergence.karmarkar_determinant_polynomial_bit_bound
+
+#print axioms QuasiNewtonConvergence.karmarkar_cramer_common_denominator
+
+#print axioms QuasiNewtonConvergence.karmarkar_binary_coordinate_margin
+
+#print axioms QuasiNewtonConvergence.logBarrier_full_newton_quarter_invariant
+
+#print axioms QuasiNewtonConvergence.logBarrier_short_step_projection_bound

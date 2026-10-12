@@ -25,5 +25,7 @@ import QuasiNewtonConvergence.KarmarkarProjective
 import QuasiNewtonConvergence.KarmarkarProjection
 import QuasiNewtonConvergence.PrimalPathFollowing
 import QuasiNewtonConvergence.SimplexPhaseOne
+import QuasiNewtonConvergence.KarmarkarBitBounds
+import QuasiNewtonConvergence.LogBarrierNewtonInvariant
 
 /-! Quasi-Newton update formulas and their convergence results are imported above. -/
