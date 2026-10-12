@@ -17,11 +17,14 @@ interior point method is in
 projective map and its inverse, feasibility preservation, exact potential
 cancellation, a barrier bound, and an exponential objective rate under the
 projected-cost ratio and coordinate bounds.
-`QuasiNewtonConvergence/KarmarkarProjection.lean` proves the projected-cost
-ratio from the two orthogonal-projection identities and the simplex-radius
-bound. It also derives the coordinate and squared-radius bounds from a
-normalized zero-sum quarter-radius step. The matrix projection construction,
-rational vertex gap, and polynomial-bit implementation are not yet proved in Lean;
+`QuasiNewtonConvergence/KarmarkarProjection.lean` constructs the direction as
+the orthogonal projection of a represented cost vector onto a feasible tangent
+subspace defined by the kernels of the transformed linear constraints and
+simplex-sum functional. It proves the projection's cost identities and
+nonvanishing, then derives the quarter-radius objective and coordinate bounds
+for a Euclidean step. Connecting these bounds to each projective iterate,
+establishing the rational vertex gap, and proving a polynomial-bit
+implementation remain to be proved in Lean;
 these files do not assert the full polynomial-time result.
 
 ## Current formalized results

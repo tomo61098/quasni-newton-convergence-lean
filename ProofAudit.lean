@@ -134,3 +134,13 @@ import QuasiNewtonConvergence
 #print axioms QuasiNewtonConvergence.karmarkar_projected_cost_ratio_quarter
 
 #print axioms QuasiNewtonConvergence.karmarkar_quarter_step_coordinates
+
+#print axioms QuasiNewtonConvergence.karmarkar_orthogonal_projection_identities
+
+#print axioms QuasiNewtonConvergence.karmarkar_orthogonal_projection_ne_zero
+
+#print axioms QuasiNewtonConvergence.karmarkar_orthogonal_projective_step_bounds
+
+#print axioms QuasiNewtonConvergence.karmarkar_projected_direction_feasible
+
+#print axioms QuasiNewtonConvergence.karmarkar_kernel_projective_step_bounds

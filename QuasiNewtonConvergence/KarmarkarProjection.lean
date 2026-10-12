@@ -1,5 +1,7 @@
 import QuasiNewtonConvergence.KarmarkarProjective
 import Mathlib.Analysis.InnerProductSpace.Basic
+import Mathlib.Analysis.InnerProductSpace.Projection.Basic
+import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.Algebra.Order.Chebyshev
 
 /-!
@@ -13,6 +15,44 @@ noncomputable section
 namespace QuasiNewtonConvergence
 
 variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+
+/-- The two cost identities used by the projective decrease theorem follow
+from an actual orthogonal projection of the cost vector onto the feasible
+tangent space. -/
+theorem karmarkar_orthogonal_projection_identities
+    (U : Submodule ℝ E) [U.HasOrthogonalProjection]
+    (ℓ : E →ₗ[ℝ] ℝ) (v w : E)
+    (hcost : ∀ x, ℓ x = inner ℝ v x) (hw : w ∈ U) :
+    let p : E := U.orthogonalProjectionOnto v
+    ℓ w = inner ℝ p w ∧ ℓ p = inner ℝ p p := by
+  let pU : U := U.orthogonalProjectionOnto v
+  have hproj (x : U) : inner ℝ (pU : E) (x : E) = inner ℝ v (x : E) := by
+    change inner ℝ (U.orthogonalProjectionOnto v : E) (x : E) = inner ℝ v (x : E)
+    simpa only [Submodule.coe_inner] using
+      (U.inner_orthogonalProjectionOnto_eq_of_mem_right x v)
+  constructor
+  · rw [hcost]
+    exact (hproj ⟨w, hw⟩).symm
+  · rw [hcost]
+    exact (hproj pU).symm
+
+/-- A positive transformed cost cannot have zero projected cost direction
+when the zero-cost optimum differs from the center by a feasible tangent. -/
+theorem karmarkar_orthogonal_projection_ne_zero
+    (U : Submodule ℝ E) [U.HasOrthogonalProjection]
+    (ℓ : E →ₗ[ℝ] ℝ) (v u z : E)
+    (hcost : ∀ x, ℓ x = inner ℝ v x)
+    (htangent : u - z ∈ U)
+    (hz : ℓ z = 0) (hu : 0 < ℓ u) :
+    (U.orthogonalProjectionOnto v : E) ≠ 0 := by
+  intro hp
+  have hids := karmarkar_orthogonal_projection_identities U ℓ v (u - z)
+    hcost htangent
+  have hlin : ℓ (u - z) = ℓ u := by simp [map_sub, hz]
+  dsimp at hids
+  change U.starProjection v = 0 at hp
+  rw [hlin, hp, inner_zero_left] at hids
+  exact (ne_of_gt hu) hids.1
 
 /-- Optimizing the transformed linear objective along its projected
 negative-gradient direction reduces it by at least the inscribed-radius to
@@ -84,6 +124,29 @@ theorem karmarkar_projected_cost_ratio_quarter
       have hnreal : (2 : ℝ) ≤ (n : ℝ) := by exact_mod_cast hn
       have hn0 : (n : ℝ) - 1 ≠ 0 := by linarith
       field_simp [hn0]
+
+/-- The quarter-radius objective bound for the orthogonal projection of a
+represented cost vector onto the transformed feasible tangent space. -/
+theorem karmarkar_orthogonal_projection_quarter_ratio
+    (U : Submodule ℝ E) [U.HasOrthogonalProjection]
+    (ℓ : E →ₗ[ℝ] ℝ) (v u z : E) (r R : ℝ)
+    (hcost : ∀ x, ℓ x = inner ℝ v x)
+    (htangent : u - z ∈ U)
+    (hr : 0 < r) (hR : 0 < R)
+    (hz : ℓ z = 0) (hu : 0 < ℓ u)
+    (hradius : ‖u - z‖ ≤ R)
+    (n : ℕ) (hn : 2 ≤ n)
+    (hratio : r / R = 1 / ((n : ℝ) - 1)) :
+    let p : E := U.orthogonalProjectionOnto v
+    ℓ (u - ((1 / 4 : ℝ) * r / ‖p‖) • p) / ℓ u ≤
+      1 - 1 / (4 * ((n : ℝ) - 1)) := by
+  let p : E := U.orthogonalProjectionOnto v
+  have hids := karmarkar_orthogonal_projection_identities U ℓ v (u - z)
+    hcost htangent
+  change ℓ (u - ((1 / 4 : ℝ) * r / ‖p‖) • p) / ℓ u ≤
+    1 - 1 / (4 * ((n : ℝ) - 1))
+  exact karmarkar_projected_cost_ratio_quarter ℓ u z p r R hr hR hz hu
+    hids.1 hids.2 hradius n hn hratio
 
 /-- The zero-sum tangent-space condition sharpens the coordinate estimate
 from a squared-radius bound by the factor `(n-1)/n`. -/
@@ -189,5 +252,126 @@ theorem karmarkar_quarter_step_coordinates
     apply (div_le_iff₀ (mul_pos (by norm_num : (0 : ℝ) < 16) hnm1)).mpr
     nlinarith
   exact ⟨hypos, hysum, hlower, hsq⟩
+
+/-- Coordinate bounds for a step written with the norm of a Euclidean
+projected direction, as in the projective algorithm. -/
+theorem karmarkar_euclidean_quarter_step_coordinates
+    {n : ℕ} (hn : 2 ≤ n) (p : EuclideanSpace ℝ (Fin n)) (r : ℝ)
+    (hp : p ≠ 0) (hpsum : ∑ i, p i = 0)
+    (hrsq : r ^ 2 = 1 / ((n : ℝ) * ((n : ℝ) - 1))) :
+    let y : Fin n → ℝ := fun i =>
+      karmarkarCenter n i - (1 / 4 : ℝ) * r * (p i / ‖p‖)
+    (∀ i, 0 < y i) ∧ (∑ i, y i = 1) ∧
+    (∀ i, -(1 / 4 : ℝ) ≤ (n : ℝ) * y i - 1) ∧
+    (∑ i, ((n : ℝ) * y i - 1) ^ 2 ≤ (1 / 8 : ℝ)) := by
+  let q : Fin n → ℝ := fun i => p i / ‖p‖
+  have hpn : ‖p‖ ≠ 0 := norm_ne_zero_iff.mpr hp
+  have hqsum : ∑ i, q i = 0 := by
+    dsimp [q]
+    rw [← Finset.sum_div, hpsum, zero_div]
+  have hqnorm : ∑ i, (q i) ^ 2 = 1 := by
+    dsimp [q]
+    simp_rw [div_pow]
+    rw [← Finset.sum_div, ← EuclideanSpace.real_norm_sq_eq]
+    exact div_self (pow_ne_zero 2 hpn)
+  exact karmarkar_quarter_step_coordinates hn q r hqsum hqnorm hrsq
+
+/-- The coordinate-sum functional on Euclidean space. -/
+def karmarkarCoordinateSum (n : ℕ) :
+    EuclideanSpace ℝ (Fin n) →ₗ[ℝ] ℝ where
+  toFun x := ∑ i, x i
+  map_add' x y := by simp [Finset.sum_add_distrib]
+  map_smul' a x := by simp [Finset.mul_sum]
+
+/-- The transformed feasible tangent space consists of directions preserving
+the linear constraints and the simplex hyperplane. -/
+def karmarkarFeasibleTangent {n : ℕ} {F : Type*}
+    [AddCommGroup F] [Module ℝ F]
+    (A : EuclideanSpace ℝ (Fin n) →ₗ[ℝ] F) :
+    Submodule ℝ (EuclideanSpace ℝ (Fin n)) :=
+  A.ker ⊓ (karmarkarCoordinateSum n).ker
+
+theorem karmarkar_projected_direction_feasible
+    {n : ℕ} {F : Type*} [AddCommGroup F] [Module ℝ F]
+    (A : EuclideanSpace ℝ (Fin n) →ₗ[ℝ] F)
+    (v : EuclideanSpace ℝ (Fin n)) :
+    let p : EuclideanSpace ℝ (Fin n) :=
+      (karmarkarFeasibleTangent A).orthogonalProjectionOnto v
+    A p = 0 ∧ ∑ i, p i = 0 := by
+  have hp := ((karmarkarFeasibleTangent A).orthogonalProjectionOnto v).property
+  exact ⟨(Submodule.mem_inf.mp hp).1,
+    (Submodule.mem_inf.mp hp).2⟩
+
+/-- The analytic ingredients of one original projective step, bundled for
+the Euclidean orthogonal projection of the transformed objective. -/
+theorem karmarkar_orthogonal_projective_step_bounds
+    {n : ℕ} (hn : 2 ≤ n)
+    (U : Submodule ℝ (EuclideanSpace ℝ (Fin n)))
+    [U.HasOrthogonalProjection]
+    (ℓ : EuclideanSpace ℝ (Fin n) →ₗ[ℝ] ℝ)
+    (v u z : EuclideanSpace ℝ (Fin n)) (r R : ℝ)
+    (hcost : ∀ x, ℓ x = inner ℝ v x)
+    (htangent : u - z ∈ U)
+    (hz : ℓ z = 0) (hu : 0 < ℓ u)
+    (hr : 0 < r) (hR : 0 < R)
+    (hradius : ‖u - z‖ ≤ R)
+    (hratio : r / R = 1 / ((n : ℝ) - 1))
+    (hrsq : r ^ 2 = 1 / ((n : ℝ) * ((n : ℝ) - 1)))
+    (hpsum : ∑ i, (U.orthogonalProjectionOnto v :
+      EuclideanSpace ℝ (Fin n)) i = 0) :
+    let p : EuclideanSpace ℝ (Fin n) := U.orthogonalProjectionOnto v
+    let y : Fin n → ℝ := fun i =>
+      karmarkarCenter n i - (1 / 4 : ℝ) * r * (p i / ‖p‖)
+    ℓ (u - ((1 / 4 : ℝ) * r / ‖p‖) • p) / ℓ u ≤
+      1 - 1 / (4 * ((n : ℝ) - 1)) ∧
+    (∀ i, 0 < y i) ∧ (∑ i, y i = 1) ∧
+    (∀ i, -(1 / 4 : ℝ) ≤ (n : ℝ) * y i - 1) ∧
+    (∑ i, ((n : ℝ) * y i - 1) ^ 2 ≤ (1 / 8 : ℝ)) := by
+  let p : EuclideanSpace ℝ (Fin n) := U.orthogonalProjectionOnto v
+  have hp : p ≠ 0 :=
+    karmarkar_orthogonal_projection_ne_zero U ℓ v u z
+      hcost htangent hz hu
+  have hratioStep := karmarkar_orthogonal_projection_quarter_ratio
+    U ℓ v u z r R hcost htangent hr hR hz hu hradius n hn hratio
+  have hcoordinates := karmarkar_euclidean_quarter_step_coordinates
+    hn p r hp hpsum hrsq
+  exact ⟨hratioStep, hcoordinates.1, hcoordinates.2.1,
+    hcoordinates.2.2.1, hcoordinates.2.2.2⟩
+
+/-- The same step bounds with the projection space fixed to the kernel of
+the transformed linear constraints and the simplex-sum functional. -/
+theorem karmarkar_kernel_projective_step_bounds
+    {n : ℕ} (hn : 2 ≤ n) {F : Type*}
+    [AddCommGroup F] [Module ℝ F]
+    (A : EuclideanSpace ℝ (Fin n) →ₗ[ℝ] F)
+    (ℓ : EuclideanSpace ℝ (Fin n) →ₗ[ℝ] ℝ)
+    (v u z : EuclideanSpace ℝ (Fin n)) (r R : ℝ)
+    (hcost : ∀ x, ℓ x = inner ℝ v x)
+    (hA : A u = A z) (hsum : ∑ i, u i = ∑ i, z i)
+    (hz : ℓ z = 0) (hu : 0 < ℓ u)
+    (hr : 0 < r) (hR : 0 < R)
+    (hradius : ‖u - z‖ ≤ R)
+    (hratio : r / R = 1 / ((n : ℝ) - 1))
+    (hrsq : r ^ 2 = 1 / ((n : ℝ) * ((n : ℝ) - 1))) :
+    let p : EuclideanSpace ℝ (Fin n) :=
+      (karmarkarFeasibleTangent A).orthogonalProjectionOnto v
+    let y : Fin n → ℝ := fun i =>
+      karmarkarCenter n i - (1 / 4 : ℝ) * r * (p i / ‖p‖)
+    ℓ (u - ((1 / 4 : ℝ) * r / ‖p‖) • p) / ℓ u ≤
+      1 - 1 / (4 * ((n : ℝ) - 1)) ∧
+    (∀ i, 0 < y i) ∧ (∑ i, y i = 1) ∧
+    (∀ i, -(1 / 4 : ℝ) ≤ (n : ℝ) * y i - 1) ∧
+    (∑ i, ((n : ℝ) * y i - 1) ^ 2 ≤ (1 / 8 : ℝ)) := by
+  have htangent : u - z ∈ karmarkarFeasibleTangent A := by
+    apply Submodule.mem_inf.mpr
+    constructor
+    · change A (u - z) = 0
+      rw [map_sub, hA, sub_self]
+    · change ∑ i, (u - z) i = 0
+      simp [Finset.sum_sub_distrib, hsum]
+  have hprojected := karmarkar_projected_direction_feasible A v
+  exact karmarkar_orthogonal_projective_step_bounds hn
+    (karmarkarFeasibleTangent A) ℓ v u z r R
+    hcost htangent hz hu hr hR hradius hratio hrsq hprojected.2
 
 end QuasiNewtonConvergence
