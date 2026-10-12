@@ -15,5 +15,10 @@ import QuasiNewtonConvergence.WolfeGradientDescent
 import QuasiNewtonConvergence.ProximalGradient
 import QuasiNewtonConvergence.ProximalNesterov
 import QuasiNewtonConvergence.ProximalBFGS
+import QuasiNewtonConvergence.DennisMoreProximal
+import QuasiNewtonConvergence.BFGSDennisMore
+import QuasiNewtonConvergence.BFGSDirectional
+import QuasiNewtonConvergence.Bregman
+import QuasiNewtonConvergence.BregmanExistence
 
 /-! Quasi-Newton update formulas and their convergence results are imported above. -/

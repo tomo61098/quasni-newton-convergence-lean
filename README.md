@@ -10,6 +10,11 @@ The project follows the package and submission conventions of the sibling
 `c-separated-np-complete-lean` repository. It pins Lean and mathlib. The BFGS
 update and line search results are developed in this repository using mathlib.
 
+A separate mathematical proof of polynomial bit complexity for Karmarkar's
+projective interior point method is in
+[KarmarkarPolynomialTimeProof.md](KarmarkarPolynomialTimeProof.md). It is not
+yet a Lean formalization.
+
 ## Current formalized results
 
 `QuasiNewtonConvergence/ProximalGradient.lean` treats a composite objective
@@ -31,6 +36,39 @@ under a uniform lower metric bound. An additional composite error bound yields
 a geometric objective rate. These bounds require assumptions beyond the BFGS
 secant update; positive definiteness of each update by itself does not give a
 uniform spectral bound.
+
+`QuasiNewtonConvergence/DennisMoreProximal.lean` proves the directional
+Dennis–Moré criterion for both smooth and proximal quasi-Newton iterations.
+It derives the step bound from uniform metric bounds and proves Q-superlinear
+convergence once the iterates converge, full steps are taken, and the
+directional Hessian error vanishes. A `ProximalBFGSRun` records the BFGS update
+recurrence. The theorem does not claim that this recurrence alone establishes
+the Dennis–Moré condition. See `DennisMoreAndBregmanProof.md`.
+
+`QuasiNewtonConvergence/BFGSDennisMore.lean` formalizes the telescoping step
+of Nocedal–Wright's Theorem 6.6: the trace–logdet potential inequality and
+summable secant errors force its two geometric defects to vanish. The complete
+mathematical argument is in [BFGSDennisMoreProof.md](BFGSDennisMoreProof.md).
+
+`QuasiNewtonConvergence/BFGSDirectional.lean` connects the actual BFGS update
+to that scalar theorem: it derives the normalized trace recurrence and proves
+that the directional Dennis–Moré ratio tends to zero when the determinant
+recurrence, nonnegative potential, and summable secant-error bound hold. The
+determinant recurrence is still an explicit hypothesis, so this is not yet
+an unconditional BFGS superlinear convergence theorem.
+
+`QuasiNewtonConvergence/Bregman.lean` defines a Bregman divergence, proves its
+three-point identity, and establishes `O(1/k)` last-iterate objective bounds
+and objective-value convergence for relative-smooth Bregman gradient descent
+and the exact Bregman proximal point method. Relative strong convexity gives
+geometric divergence and objective bounds. A divergence that controls squared
+norm distance also gives convergence of the iterates. Proximal existence is
+proved separately in `QuasiNewtonConvergence/BregmanExistence.lean` for
+finite-dimensional spaces, continuous objectives with an affine lower bound,
+and strongly convex continuous kernels. It constructs a minimizer at each
+step and a full recursive trajectory. The variational optimality condition
+used by the rate theorems is not yet derived from those minimizers. A separate
+existence theorem allows the proximal objective to change at every step.
 
 `QuasiNewtonConvergence/GradientDescent.lean` proves convergence of fixed-step
 gradient descent with step size `1/L`. For an `L`-smooth convex objective, it
@@ -130,8 +168,10 @@ assumptions on the relevant level set.
 
 The Lean proof of Theorem 6.5 still requires the finite-dimensional
 determinant identity, the Hessian bounds on the level set, and the final
-Zoutendijk-to-iterate argument. Theorem 6.6 requires the Dennis--Moré
-characterization and its BFGS summability argument.
+Zoutendijk-to-iterate argument. For Theorem 6.6 the scalar potential,
+summability, and geometric limit argument is formalized; the remaining work
+is connecting the determinant update and scaled secant estimates to the
+concrete BFGS map.
 
 A complete mathematical proof of Theorem 6.5 is in
 [BFGSGlobalProof.md](BFGSGlobalProof.md). Its trace update identity is now
