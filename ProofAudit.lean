@@ -144,3 +144,19 @@ import QuasiNewtonConvergence
 #print axioms QuasiNewtonConvergence.karmarkar_projected_direction_feasible
 
 #print axioms QuasiNewtonConvergence.karmarkar_kernel_projective_step_bounds
+
+#print axioms QuasiNewtonConvergence.primal_log_barrier_gap
+
+#print axioms QuasiNewtonConvergence.primal_approx_log_barrier_gap
+
+#print axioms QuasiNewtonConvergence.primal_short_step_central_path_accuracy
+
+#print axioms QuasiNewtonConvergence.primal_newton_short_step_approx_accuracy
+
+#print axioms QuasiNewtonConvergence.phaseOne_all_zero_iff_rhs_zero
+
+#print axioms QuasiNewtonConvergence.simplex_slack_iff_inequality
+
+#print axioms QuasiNewtonConvergence.phaseOne_optimum_zero_iff_original_feasible
+
+#print axioms QuasiNewtonConvergence.phaseOne_signed_feasible_iff_zero_objective

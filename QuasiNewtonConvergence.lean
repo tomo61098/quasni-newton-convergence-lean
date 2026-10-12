@@ -23,5 +23,7 @@ import QuasiNewtonConvergence.Bregman
 import QuasiNewtonConvergence.BregmanExistence
 import QuasiNewtonConvergence.KarmarkarProjective
 import QuasiNewtonConvergence.KarmarkarProjection
+import QuasiNewtonConvergence.PrimalPathFollowing
+import QuasiNewtonConvergence.SimplexPhaseOne
 
 /-! Quasi-Newton update formulas and their convergence results are imported above. -/

@@ -27,6 +27,20 @@ establishing the rational vertex gap, and proving a polynomial-bit
 implementation remain to be proved in Lean;
 these files do not assert the full polynomial-time result.
 
+The [primal path-following proof](PrimalPathFollowingProof.md) gives a
+short-step log-barrier Newton argument with
+`O(√n log(n/(t₀ ε)))` iterations. Its Lean companion,
+`QuasiNewtonConvergence/PrimalPathFollowing.lean`, proves the central-path
+and residual-based objective gaps and explicit iteration thresholds. The
+self-concordant Newton neighborhood induction is still mathematical rather
+than formalized in Lean.
+
+`QuasiNewtonConvergence/SimplexPhaseOne.lean` formalizes the simplex Phase I
+feasibility trick: the initial point is `(x,a) = (0,b)` when `b ≥ 0`, and an
+attained auxiliary optimum has value zero exactly when the original LP is
+feasible. It also proves the ordinary-slack equivalence for inequalities and
+a signed-artificial-variable construction for arbitrary `b`.
+
 ## Current formalized results
 
 `QuasiNewtonConvergence/ProximalGradient.lean` treats a composite objective
