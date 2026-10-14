@@ -194,6 +194,29 @@ theorem logBarrier_projected_gradient_of_residual
   rw [hdecomp, map_add, hqzero, add_zero]
   exact (U.norm_starProjection_apply_le _).trans he
 
+/-- The Euclidean Newton residual controls the projected gradient at the
+new point. Here `U` is the tangent space scaled by the new positive point,
+and the scaled equality multiplier belongs to its orthogonal complement. -/
+theorem logBarrier_full_newton_projected_invariant
+    {n : ℕ} (U : Submodule ℝ (EuclideanSpace ℝ (Fin n)))
+    [U.HasOrthogonalProjection]
+    (c x d q : Fin n → ℝ) (t ρ : ℝ)
+    (hx : ∀ i, 0 < x i) (hρ : 0 ≤ ρ) (hρone : ρ < 1)
+    (hnorm : ∑ i, (d i / x i) ^ 2 ≤ ρ ^ 2)
+    (hnewton : ∀ i,
+      t * c i - 1 / x i + d i / (x i) ^ 2 = q i)
+    (horth : (WithLp.toLp 2 (fun i => (x i + d i) * q i) :
+      EuclideanSpace ℝ (Fin n)) ∈ Uᗮ) :
+    (∀ i, 0 < x i + d i) ∧
+      ‖U.starProjection
+        (WithLp.toLp 2 (fun i => t * (x i + d i) * c i - 1))‖ ≤ ρ ^ 2 := by
+  obtain ⟨hxnew, _, he, hstationary⟩ :=
+    logBarrier_full_newton_euclidean_residual_invariant c x d q t ρ
+      hx hρ hρone hnorm hnewton
+  exact ⟨hxnew, logBarrier_projected_gradient_of_residual U c
+    (fun i => x i + d i) q (fun i => -(d i / x i) ^ 2) t (ρ ^ 2)
+    (fun i => ne_of_gt (hxnew i)) hstationary horth he⟩
+
 /-- A certified full Newton step keeps a coordinatewise centrality
 neighborhood. The new residual is exactly `-(dᵢ/xᵢ)^2`. -/
 theorem logBarrier_full_newton_residual_invariant
@@ -312,6 +335,62 @@ theorem logBarrier_short_step_projection_bound
       (1 / (16 * Real.sqrt (n : ℝ))) •
         (v + WithLp.toLp 2 (fun _ : Fin n => (1 : ℝ))))‖
     hsqrt (norm_nonneg _) hcurrent hperturb'
+
+/-- A full Newton step with local norm at most `21/64` restores the
+projected Euclidean neighborhood needed by the next parameter update. -/
+theorem logBarrier_full_newton_projected_quarter_invariant
+    {n : ℕ} (U : Submodule ℝ (EuclideanSpace ℝ (Fin n)))
+    [U.HasOrthogonalProjection]
+    (c x d q : Fin n → ℝ) (t ρ : ℝ)
+    (hx : ∀ i, 0 < x i) (hρ : 0 ≤ ρ) (hρbound : ρ ≤ 21 / 64)
+    (hnorm : ∑ i, (d i / x i) ^ 2 ≤ ρ ^ 2)
+    (hnewton : ∀ i,
+      t * c i - 1 / x i + d i / (x i) ^ 2 = q i)
+    (horth : (WithLp.toLp 2 (fun i => (x i + d i) * q i) :
+      EuclideanSpace ℝ (Fin n)) ∈ Uᗮ) :
+    (∀ i, 0 < x i + d i) ∧
+      ‖U.starProjection
+        (WithLp.toLp 2 (fun i => t * (x i + d i) * c i - 1))‖ ≤ 1 / 4 := by
+  have hρone : ρ < 1 := by linarith
+  have hρsq : ρ ^ 2 ≤ (1 / 4 : ℝ) := by
+    have hsq := (sq_le_sq₀ hρ (by norm_num : (0 : ℝ) ≤ 21 / 64)).mpr hρbound
+    nlinarith
+  obtain ⟨hxnew, hprojected⟩ := logBarrier_full_newton_projected_invariant
+    U c x d q t ρ hx hρ hρone hnorm hnewton horth
+  exact ⟨hxnew, hprojected.trans hρsq⟩
+
+/-- The restored projected neighborhood supplies the next short-step
+parameter bound without a dimension-dependent loss from coordinate bounds. -/
+theorem logBarrier_full_newton_next_short_step_bound
+    {n : ℕ} (hn : 1 ≤ n)
+    (U : Submodule ℝ (EuclideanSpace ℝ (Fin n)))
+    [U.HasOrthogonalProjection]
+    (c x d q : Fin n → ℝ) (t ρ : ℝ)
+    (hx : ∀ i, 0 < x i) (hρ : 0 ≤ ρ) (hρbound : ρ ≤ 21 / 64)
+    (hnorm : ∑ i, (d i / x i) ^ 2 ≤ ρ ^ 2)
+    (hnewton : ∀ i,
+      t * c i - 1 / x i + d i / (x i) ^ 2 = q i)
+    (horth : (WithLp.toLp 2 (fun i => (x i + d i) * q i) :
+      EuclideanSpace ℝ (Fin n)) ∈ Uᗮ) :
+    (∀ i, 0 < x i + d i) ∧
+      ‖U.starProjection (WithLp.toLp 2 (fun i =>
+        ((1 + 1 / (16 * Real.sqrt (n : ℝ))) * t) *
+          (x i + d i) * c i - 1))‖ ≤ 21 / 64 := by
+  obtain ⟨hxnew, hprojected⟩ :=
+    logBarrier_full_newton_projected_quarter_invariant U c x d q t ρ
+      hx hρ hρbound hnorm hnewton horth
+  have hnext := logBarrier_short_step_projection_bound hn U
+    (WithLp.toLp 2 (fun i => t * (x i + d i) * c i - 1)) hprojected
+  refine ⟨hxnew, ?_⟩
+  convert hnext using 2
+  congr 1
+  ext i
+  change ((1 + 1 / (16 * Real.sqrt (n : ℝ))) * t) *
+      (x i + d i) * c i - 1 =
+    (t * (x i + d i) * c i - 1) +
+      (1 / (16 * Real.sqrt (n : ℝ))) *
+        ((t * (x i + d i) * c i - 1) + 1)
+  ring
 
 /-- The exact log-barrier Newton residual is below `1/4` after a step
 whose local norm is at most `21/64`. -/

@@ -46,8 +46,10 @@ determinant-size bound, an integer-objective vertex gap under a common
 denominator, Cramer's signed denominator formula for integer systems,
 coordinate retention, and a dyadic storage threshold.
 `QuasiNewtonConvergence/LogBarrierNewtonInvariant.lean` proves the exact
-full-step log-barrier residual identity, positivity and residual control from
-a certified Newton direction, and the projected short-step parameter bound.
+full-step log-barrier residual identity, positivity and Euclidean residual
+control from a certified Newton direction, and the projected short-step
+parameter bound. The residual bound controls the projected gradient at the
+new point without a dimension-dependent loss.
 The LP-vertex reduction, finite-precision projective implementation, and
 projection-to-Newton-direction bridge remain outside Lean.
 
@@ -62,8 +64,8 @@ supplied to the rate theorems.
 
 `QuasiNewtonConvergence/ProximalNesterov.lean` proves the accelerated
 three-sequence potential and its `O(1/k²)` objective bound for standard
-quadratically growing FISTA weights. The quadratic growth of the weights is
-an explicit hypothesis of the rate theorem. It also proves the geometric
+quadratically growing FISTA weights. It derives quadratic weight growth from
+the exact weight equations. It also proves the geometric
 objective bound for fixed-length restarts under quadratic growth of `F`.
 
 `QuasiNewtonConvergence/ProximalBFGS.lean` proves descent and summability of
@@ -87,11 +89,12 @@ summable secant errors force its two geometric defects to vanish. The complete
 mathematical argument is in [BFGSDennisMoreProof.md](BFGSDennisMoreProof.md).
 
 `QuasiNewtonConvergence/BFGSDirectional.lean` connects the actual BFGS update
-to that scalar theorem: it derives the normalized trace recurrence and proves
-that the directional Dennis–Moré ratio tends to zero when the determinant
-recurrence, nonnegative potential, and summable secant-error bound hold. The
-determinant recurrence is still an explicit hypothesis, so this is not yet
-an unconditional BFGS superlinear convergence theorem.
+to that scalar theorem. From initial symmetric positive definiteness and
+positive secant curvature, it derives the actual determinant recurrence and
+the trace–logdet lower bound, and proves that the directional Dennis–Moré
+ratio tends to zero under a summable secant-error bound. Deriving that error
+bound from local Hessian regularity, changing coordinates from a general
+reference Hessian, and proving eventual full steps remain separate obligations.
 
 `QuasiNewtonConvergence/StrongWolfeCounterexample.lean` proves that strong
 Wolfe line search alone cannot imply superlinear BFGS convergence. On the
@@ -110,8 +113,9 @@ norm distance also gives convergence of the iterates. Proximal existence is
 proved separately in `QuasiNewtonConvergence/BregmanExistence.lean` for
 finite-dimensional spaces, continuous objectives with an affine lower bound,
 and strongly convex continuous kernels. It constructs a minimizer at each
-step and a full recursive trajectory. The variational optimality condition
-used by the rate theorems is not yet derived from those minimizers. A separate
+step and a full recursive trajectory. With a differentiable kernel whose
+gradient is the supplied map, minimization implies the variational optimality
+condition and gives an `O(1/k)` bound for the constructed trajectory. A separate
 existence theorem allows the proximal objective to change at every step.
 
 `QuasiNewtonConvergence/GradientDescent.lean` proves convergence of fixed-step
@@ -196,8 +200,11 @@ the weak Wolfe inequalities at each step.
 Hessian form of the BFGS update. The companion
 `bfgsUpdate_secant_of_curvature` derives its denominator conditions from a
 positive definite approximation and the curvature condition.
-`lake build QuasiNewtonConvergence` passes, and
-`lake env lean ProofAudit.lean` reports only Lean's three standard axioms.
+Build with `lake build QuasiNewtonConvergence QuasiNewtonConvergence.AxiomAudit`.
+Then `lake env lean ProofAudit.lean` rejects unfinished proofs and any axiom
+dependency outside `propext`, `Classical.choice`, and `Quot.sound`.
+`lake env lean ProofAuditTests.lean` checks that the audit rejects both
+unfinished proofs and indirect dependencies on a custom axiom.
 This lemma is a foundation for the convergence proofs, not a proof of either
 book theorem.
 
@@ -210,21 +217,20 @@ line search produces weak Wolfe steps and uses a global Lipschitz gradient
 bound; later work will derive the needed bound from the book's Hessian
 assumptions on the relevant level set.
 
-The Lean proof of Theorem 6.5 still requires the finite-dimensional
-determinant identity, the Hessian bounds on the level set, and the final
+The Lean proof of Theorem 6.5 still requires the Hessian bounds on the level
+set and the final
 Zoutendijk-to-iterate argument. For Theorem 6.6 the scalar potential,
 summability, and geometric limit argument is formalized; the remaining work
-is connecting the determinant update and scaled secant estimates to the
-concrete BFGS map.
+is deriving the scaled secant estimates and connecting a general reference
+Hessian to the normalized BFGS map.
 
 A complete mathematical proof of Theorem 6.5 is in
-[BFGSGlobalProof.md](BFGSGlobalProof.md). Its trace update identity is now
-formalized in `QuasiNewtonConvergence/BFGSMatrix.lean`. The scalar
+[BFGSGlobalProof.md](BFGSGlobalProof.md). Its trace and determinant update
+identities and the positive-definite potential lower bound are formalized
+in `QuasiNewtonConvergence/BFGSMatrix.lean`. The scalar
 trace–determinant potential recurrence and its no-angle-collapse consequence
-are formalized in `QuasiNewtonConvergence/BFGSGlobal.lean`. The finite-dimensional
-determinant lemma has a proved two-dimensional reduction; connecting its
-entries to the bundled BFGS map and completing the level-set iterate theorem
-remain open in Lean.
+are formalized in `QuasiNewtonConvergence/BFGSGlobal.lean`. Completing the
+level-set iterate theorem remains open in Lean.
 
 No Palomar submission is ready until the full statements are proved without
 placeholders, independently mirrored in a Challenge module, and checked by

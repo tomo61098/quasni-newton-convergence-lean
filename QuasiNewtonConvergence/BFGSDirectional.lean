@@ -4,8 +4,9 @@ import QuasiNewtonConvergence.BFGSDennisMore
 /-!
 # Directional Dennis–Moré from BFGS scalar potential data
 
-The update supplies the trace change and the directional geometry. The
-determinant recurrence and summable secant error remain explicit hypotheses.
+The update supplies the trace, determinant, and directional geometry. The
+public sequence theorem derives the matrix potential from initial symmetric
+positive definiteness; summable secant error remains an explicit hypothesis.
 -/
 
 noncomputable section
@@ -93,5 +94,42 @@ theorem bfgs_update_directional_dennis_more
     (fun k => ‖B k (s k) - s k‖ / ‖s k‖)
     hD hm hq hc hcle hpot herr hsum htrace hdet herror
     (fun k => div_nonneg (norm_nonneg _) (norm_nonneg _)) hgeom
+
+/-- Directional Dennis–Moré for BFGS from initial positive definiteness and
+summable secant errors. The determinant and potential are those of the actual
+endomorphisms; their recurrence and lower bound are proved from the updates. -/
+theorem bfgs_sequence_directional_dennis_more
+    (B : ℕ → E →ₗ[ℝ] E) (s y : ℕ → E) (secantError : ℕ → ℝ)
+    (hinitial : PositiveDefinite (B 0) ∧ SymmetricHessian (B 0))
+    (hupdate : ∀ k, B (k + 1) = bfgsUpdateMap (B k) (s k) (y k))
+    (hy : ∀ k, 0 < inner ℝ (y k) (s k))
+    (herr : ∀ k, 0 ≤ secantError k)
+    (hsum : Summable secantError)
+    (herror : ∀ k, ‖y k‖ ^ 2 / inner ℝ (y k) (s k) -
+      Real.log (inner ℝ (y k) (s k) / ‖s k‖ ^ 2) - 1 ≤
+        secantError k) :
+    Tendsto (fun k => ‖B k (s k) - s k‖ / ‖s k‖)
+      atTop (nhds 0) := by
+  have hs (k : ℕ) : s k ≠ 0 := by
+    intro hz
+    have hp := hy k
+    simp [hz] at hp
+  have hB : ∀ k, PositiveDefinite (B k) ∧ SymmetricHessian (B k) :=
+    broydenSequence_positive B (fun _ => .bfgs) s y hinitial hupdate
+      (fun _ => trivial) hs hy
+  apply bfgs_update_directional_dennis_more B s y
+    (fun k => (B k).det) secantError hupdate
+    (fun k => (hB k).1 (s k) (hs k)) hy
+    (fun k => positiveDefinite_det_pos (B k) (hB k).1 (hB k).2)
+    (fun k => le_trans (Nat.cast_nonneg _)
+      (positiveDefinite_trace_sub_log_det (B k) (hB k).1 (hB k).2))
+    herr hsum ?_ herror
+  intro k
+  rw [hupdate k, bfgs_det_update (B k) (s k) (y k)
+    (hB k).1 (hB k).2 (hs k) (hy k)]
+  have hsn : ‖s k‖ ≠ 0 := norm_ne_zero_iff.mpr (hs k)
+  have hβ : inner ℝ (B k (s k)) (s k) ≠ 0 :=
+    ne_of_gt ((hB k).1 (s k) (hs k))
+  field_simp
 
 end QuasiNewtonConvergence

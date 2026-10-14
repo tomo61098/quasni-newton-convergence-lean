@@ -44,7 +44,9 @@ With \(z_0=x_0\), this telescopes to \(A_k(F(x_k)-F(x_*))\le\|x_0-x_*\|^2/2\). W
 \[
 F(x_k)-F(x_*)\le \frac{2L\|x_0-x_*\|^2}{k^2},\quad k\ge1. \tag{3}
 \]
-The Lean quadratic-rate theorem takes weight growth as an explicit hypothesis; its weighted-potential theorem uses only the exact weight equations.
+The Lean quadratic-rate theorem derives weight growth from these exact weight
+equations using a scalar induction; callers no longer supply a separate growth
+hypothesis. The weighted-potential theorem remains available independently.
 
 If the full \(F\) is \(\mu\)-strongly convex, restart after each block of \(N\) accelerated steps. Strong convexity gives \(\|x-x_*\|^2\le 2(F(x)-F(x_*))/\mu\). By (3), each block contracts the objective gap by \(q=4L/(\mu N^2)\). Choose \(N>\sqrt{4L/\mu}\); then \(q<1\), and after \(r\) blocks the gap is at most \(q^r\) times its initial value. This is the restarted accelerated guarantee.
 

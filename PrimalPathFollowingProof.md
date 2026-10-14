@@ -77,9 +77,10 @@ minimizing over multipliers can only reduce it. Hence
 \(\lambda_t(x^+)\le\lambda^2<1/4\) for \(\lambda\le21/64\).
 
 Induction proves strict feasibility and the \(1/4\) neighborhood invariant
-for every iterate. The self-concordant Newton estimate is the essential
-algorithmic lemma; it cannot be replaced by a claim that each subproblem is
-solved exactly.
+for every iterate. The direct residual argument supplies the Newton-step
+estimate for this barrier. Retaining its Euclidean norm bound is essential:
+coordinatewise bounds \(|e_i|\le1/4\) alone would only give
+\(\|e\|_2\le\sqrt n/4\), which does not close the same induction.
 
 ## Primal objective gap
 
@@ -136,11 +137,13 @@ The PrimalPathFollowing Lean module proves the exact and coordinatewise
 residual gap inequalities and the logarithmic iteration thresholds for
 sequences satisfying the stated centrality conditions. The
 LogBarrierNewtonInvariant Lean module proves the full-step residual
-identity, positivity and a one-quarter residual bound from a certified
-Newton direction, and the projected short-step perturbation bound
-\(1/4\to21/64\). The identification of that projection with the
-constrained Newton direction and the resulting iterate-level induction
-are not yet formalized in Lean.
+identity, positivity, and the Euclidean residual bound
+\(\|e\|_2\le\lambda^2\) from a certified Newton direction. Given
+orthogonality of the scaled equality multiplier, it transfers this bound
+to the projected gradient at the new point, restores the \(1/4\)
+neighborhood, and proves the next parameter-update bound of \(21/64\).
+Constructing the constrained Newton direction and the resulting
+iterate-level induction are not yet formalized in Lean.
 
 The analytic short-step argument follows the classical self-concordant barrier
 method; see [Vishnoi's interior-point lecture notes](https://theory.epfl.ch/vishnoi/CargeseLectures.pdf)

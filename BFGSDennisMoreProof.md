@@ -154,9 +154,12 @@ nonnegative, and proves the telescoping implication: a nonnegative potential
 and summable error imply summability, hence convergence to zero, of both
 defects. It also links indexed scalar trace and determinant equations to
 the normalized directional error, proves the two ratios tend to one, and
-formalizes the geometric identity (6.47). The repository already has the
-BFGS trace identity in
-[`BFGSMatrix.lean`](QuasiNewtonConvergence/BFGSMatrix.lean). The determinant
-identity for the bundled `bfgsUpdateMap` and the change-of-coordinates and
-secant-error estimates for a concrete BFGS run have not yet been connected
-in Lean.
+formalizes the geometric identity (6.47).
+[`BFGSMatrix.lean`](QuasiNewtonConvergence/BFGSMatrix.lean) proves the trace
+and determinant identities for the bundled `bfgsUpdateMap`, positivity of the
+determinant, and the trace–logdet lower bound.
+[`BFGSDirectional.lean`](QuasiNewtonConvergence/BFGSDirectional.lean) uses
+these results to derive the normalized directional condition from initial
+positive definiteness, positive secant curvature, and a summable secant-error
+bound. The change-of-coordinates and secant-error estimates from local Hessian
+regularity remain to be connected in Lean.

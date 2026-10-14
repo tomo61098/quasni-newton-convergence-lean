@@ -62,7 +62,12 @@ of \(Dc\) onto \(S\). Let
 
 The case \(p=0\) with \(c^Ta>0\) cannot occur while the optimum is zero:
 it would make the transformed objective constant on the feasible affine
-space. The radius \(r\) is the inscribed radius of the standard simplex
+space. The decision procedure checks this case before normalizing \(p\)
+and returns a positive-minimum certificate: the constant transformed
+objective is \((Dc)^Tu=(c^Ta)/n>0\), and the inverse denominator is positive
+and at most \(\max_i a_i\) on the simplex, giving a uniform positive
+lower bound on the original objective. Otherwise it uses (2). The radius
+\(r\) is the inscribed radius of the standard simplex
 in its affine hull. Thus (2) is feasible and strictly positive. Applying
 the inverse of (1) gives the next iterate \(a^+\).
 
@@ -203,6 +208,11 @@ within polynomially many steps either a zero certificate is found or a failed
 decrease certifies a positive minimum. This is the canonical decision
 procedure.
 
+This describes the exact-arithmetic decrease test. The finite precision
+implementation below uses a smaller acceptance threshold and a certified
+error bound, so it never needs to decide equality between logarithmic
+expressions.
+
 ## Why this is a bit-complexity result
 
 Counting exact real-arithmetic steps alone would not prove polynomial
@@ -218,9 +228,9 @@ Equation (3) and the inverse map give the coordinate-wise estimate
  \tag{8}
 \]
 
-If each computed point is rounded within one tenth of the current minimum
-coordinate **inside the fixed feasible affine space**, its next coordinates
-remain at least half their previous values. Up to the polynomial iteration
+If the combined step-approximation and rounding error is within one tenth of
+the current minimum coordinate **inside the fixed feasible affine space**,
+its next coordinates remain at least half their previous values. Up to the polynomial iteration
 limit \(K\), all coordinates are therefore at least \(1/(n2^K)\). At a
 step whose exact output still has objective at least \(\varepsilon/2\),
 the objective along a sufficiently short rounding segment stays above
@@ -248,15 +258,46 @@ For each stored iterate, the transformed matrix and cost vector therefore
 have polynomial bit length. A rational linear solve computes the exact
 projection \(p\); Cramer's rule and Hadamard's bound give polynomial bit
 length for its coordinates. Square-root approximation and normalization to
-\(P\) bits take polynomial bit time. The projected direction does not become
-too small to normalize before termination: the estimate above gives
-\(\|p\|\ge(Dc)^Tu/R=(c^Ta)/(nR)\ge\varepsilon/(nR)\).
+\(P\) bits take polynomial bit time. To justify normalization in **both**
+decision branches, first check \(p=0\) exactly and return the
+positive-minimum certificate described above when it holds. Otherwise some
+coordinate of the exact rational vector \(p\) is nonzero. If its numerator
+and denominator have at most \(Q=\operatorname{poly}(n,B,K)\) bits, its
+magnitude is at least \(2^{-Q}\), so \(\|p\|\ge2^{-Q}\). Thus polynomially
+many guard bits suffice for normalization even when the minimum is positive.
+In the zero-optimum case the stronger geometric estimate
+\(\|p\|\ge(Dc)^Tu/R=(c^Ta)/(nR)\ge\varepsilon/(nR)\) also holds before
+termination, but the positive-minimum branch does not rely on it.
 Use a rational scalar multiple of the exact rational vector \(p\), so the
 approximate projected point remains in the transformed feasible affine space.
 Round its inverse projective image in the original affine feasible space.
 Thus each step consists of polynomially many operations on polynomial-bit
-rationals. With the verified decrease \(1/8\), increase the iteration cap by
-the corresponding constant factor; it remains polynomial.
+rationals.
+
+For the decrease test, first compare the rounded objective with
+\(\varepsilon\) using exact rational arithmetic, stopping and recovering a
+zero vertex if it is at most \(\varepsilon<1/D\). Otherwise approximate the
+potential drop \(\Delta=\Phi(a)-\Phi(a^+)\) by a rational
+\(\widehat\Delta\) with certified absolute error at most \(1/64\). All
+logarithm arguments are positive rationals of polynomial bit length, so
+this accuracy costs polynomial bit time: an absolute error of at most
+\(1/(256n)\) in each logarithm suffices, since the sum of their absolute
+coefficients in \(\Delta\) is \(4n\). Accept the step
+when \(\widehat\Delta\ge1/16\). An accepted step has
+\(\Delta\ge1/16-1/64=3/64\). When the optimum is zero, the approximation
+bounds above give \(\Delta\ge1/8\), hence
+\(\widehat\Delta\ge7/64>1/16\): the test always accepts. A rejected step
+therefore certifies a positive minimum. The comparison is between rationals
+and terminates even when the exact potential drop lies on a threshold.
+
+Replace the iteration cap by a polynomial integer upper bound strictly
+greater than
+\(\max\{0,(64n/3)\log(Dc^Tx^{(0)})\}\). If all steps were accepted until
+that cap, their decrease of at least \(3/64\) would force the objective
+below \(1/D\), exactly as in (7). At the cap, recover a vertex from the
+last iterate; its objective is then exactly zero. Thus the rounded
+algorithm either finds a zero certificate or certifies a positive minimum
+in polynomial bit time.
 
 The original paper optimizes the linear algebra further: Sections 6.1–6.3
 use rank-one inverse updates, obtaining \(O(n^{2.5})\) arithmetic operations

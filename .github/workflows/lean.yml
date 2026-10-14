@@ -20,4 +20,8 @@ jobs:
         with:
           build: true
       - name: Audit axioms of proved results
-        run: lake env lean ProofAudit.lean
+        run: |
+          lake build QuasiNewtonConvergence.AxiomAudit
+          lake env lean ProofAudit.lean
+      - name: Check axiom audit rejects untrusted proofs
+        run: lake env lean ProofAuditTests.lean

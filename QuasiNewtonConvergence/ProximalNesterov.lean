@@ -99,8 +99,48 @@ theorem proximalNesterov_weighted_rate (f g : E → ℝ)
       linarith
   nlinarith [hpot n, sq_nonneg ‖z n - u‖]
 
-/-/ The usual explicit `O(1/n²)` form once the accelerated weights have
-their standard quadratic growth. -/
+/-- The exact accelerated weight equations force quadratic growth. -/
+theorem proximalNesterov_weight_growth (L : ℝ) (hL : 0 < L)
+    (A a θ : ℕ → ℝ) (hAn : ∀ k, 0 ≤ A k) (han : ∀ k, 0 < a k)
+    (hAsucc : ∀ k, A (k + 1) = A k + a k)
+    (hweight : ∀ k, (A k + a k) * θ k = a k)
+    (hexact : ∀ k, (A k + a k) * L * (θ k) ^ 2 = 1)
+    (n : ℕ) : (n : ℝ) ^ 2 / (4 * L) ≤ A n := by
+  have hrec (k : ℕ) : L * (a k) ^ 2 = A (k + 1) := by
+    calc
+      L * (a k) ^ 2 =
+          ((A k + a k) * L * (θ k) ^ 2) * (A k + a k) := by
+        conv_lhs => rw [← hweight k]
+        ring
+      _ = A (k + 1) := by rw [hexact k, one_mul, hAsucc k]
+  have hscaled (k : ℕ) : (k : ℝ) ^ 2 ≤ 4 * L * A k := by
+    induction k with
+    | zero => simpa using mul_nonneg (by positivity : 0 ≤ 4 * L) (hAn 0)
+    | succ k ih =>
+      let t := 2 * L * a k
+      have ht : 0 < t := mul_pos (mul_pos (by norm_num) hL) (han k)
+      have heq : t ^ 2 = 4 * L * A k + 2 * t := by
+        have hr := congrArg (fun v : ℝ => 4 * L * v) (hrec k)
+        rw [hAsucc k] at hr
+        dsimp [t]
+        nlinarith only [hr]
+      have ht1 : 1 ≤ t := by
+        have hnonneg := mul_nonneg (by positivity : 0 ≤ 4 * L) (hAn k)
+        nlinarith
+      have hkt : (k : ℝ) + 1 ≤ t := by
+        have hk : (0 : ℝ) ≤ k := Nat.cast_nonneg k
+        nlinarith [sq_nonneg (t - 1 - (k : ℝ))]
+      have hsquare : ((k : ℝ) + 1) ^ 2 ≤ t ^ 2 :=
+        pow_le_pow_left₀ (by positivity) hkt 2
+      have hr := congrArg (fun v : ℝ => 4 * L * v) (hrec k)
+      dsimp [t] at hsquare
+      push_cast
+      nlinarith only [hsquare, hr]
+  exact (div_le_iff₀ (by positivity : 0 < 4 * L)).2 (by
+    simpa only [mul_comm] using hscaled n)
+
+/-- The usual explicit `O(1/n²)` form, with quadratic weight growth
+derived from the accelerated weight equations. -/
 theorem proximalNesterov_quadratic_rate (f g : E → ℝ)
     (gradient : E → E) (L : ℝ) (hL : 0 < L)
     (hsmooth : SmoothUpper f gradient L)
@@ -116,7 +156,6 @@ theorem proximalNesterov_quadratic_rate (f g : E → ℝ)
     (hy : ∀ k, y k = (1 - θ k) • x k + θ k • z k)
     (hx : ∀ k, x (k + 1) = (1 - θ k) • x k + θ k • z (k + 1))
     (hprox : ∀ k, ProximalOptimality g gradient L (y k) (x (k + 1)))
-    (hgrowth : ∀ n : ℕ, (n : ℝ) ^ 2 / (4 * L) ≤ A n)
     (hmin : ∀ v, composite f g u ≤ composite f g v)
     (n : ℕ) (hn : 0 < n) :
     composite f g (x n) - composite f g u ≤
@@ -126,7 +165,8 @@ theorem proximalNesterov_quadratic_rate (f g : E → ℝ)
     hθ0 hθ1 hAsucc hweight hexact hy hx hprox n
   have hgap : 0 ≤ composite f g (x n) - composite f g u :=
     sub_nonneg.mpr (hmin (x n))
-  have hgr := hgrowth n
+  have hgr := proximalNesterov_weight_growth L hL A a θ hAn han
+    hAsucc hweight hexact n
   have hnR : 0 < (n : ℝ) := Nat.cast_pos.mpr hn
   have hmul := mul_le_mul_of_nonneg_right hgr hgap
   have hbound : ((n : ℝ) ^ 2 / (4 * L)) *

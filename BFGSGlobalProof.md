@@ -1,10 +1,11 @@
 # Global convergence of BFGS (Nocedal–Wright, Theorem 6.5)
 
 This is a mathematical proof of the book's result. The existing Lean library
-proves the secant equation, preservation of positive definiteness, and
-Zoutendijk summability under a global Lipschitz-gradient hypothesis. The
-level-set version and the complete finite-dimensional trace–determinant
-argument below are **not yet formalized in Lean**.
+proves the secant equation, preservation of positive definiteness, the matrix
+trace and determinant identities, the trace–logdet lower bound, and Zoutendijk
+summability under a global Lipschitz-gradient hypothesis. The level-set
+estimates and the final argument connecting the angle bound to convergence
+of the iterates are **not yet formalized in Lean**.
 
 ## Statement
 

@@ -96,4 +96,10 @@ L\left(\frac{L}{L+\mu}\right)^nD_h(x_0,x_*).
 The orientation of this growth assumption matters because Bregman divergence
 need not be symmetric.
 
-The Lean definitions use finite-valued functions and state exact variational optimality explicitly. Existence of the proximal minimizers is a separate issue; standard sufficient conditions include proper closed convex objectives and an appropriate coercive kernel.
+The Lean definitions use finite-valued functions and state exact variational
+optimality explicitly. `BregmanExistence.lean` constructs proximal minimizers
+under finite-dimensional continuity and strong-convexity assumptions. When the
+kernel is differentiable with the supplied gradient, it derives variational
+optimality from minimization and applies the rate theorem to the constructed
+trajectory. The differentiability assumption matters: the strong first-order
+inequality alone also permits nonsmooth kernels with selected subgradients.

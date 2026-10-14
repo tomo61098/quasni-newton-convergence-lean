@@ -5,10 +5,9 @@ import Mathlib.Tactic.Linarith
 # The scalar trace–determinant potential argument for BFGS
 
 Nocedal–Wright's potential `trace B - log det B` satisfies the recurrence
-below after the finite-dimensional trace and determinant identities are
-established. This lemma proves that such a recurrence prevents every
-search angle from tending to zero. The matrix identities themselves remain
-to be formalized.
+below using the finite-dimensional trace and determinant identities proved
+in `BFGSMatrix`. This lemma proves that such a recurrence prevents every
+search angle from tending to zero.
 -/
 
 namespace QuasiNewtonConvergence
