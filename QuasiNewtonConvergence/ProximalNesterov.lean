@@ -99,7 +99,7 @@ theorem proximalNesterov_weighted_rate (f g : E → ℝ)
       linarith
   nlinarith [hpot n, sq_nonneg ‖z n - u‖]
 
-/-- The usual explicit `O(1/n²)` form once the accelerated weights have
+/-/ The usual explicit `O(1/n²)` form once the accelerated weights have
 their standard quadratic growth. -/
 theorem proximalNesterov_quadratic_rate (f g : E → ℝ)
     (gradient : E → E) (L : ℝ) (hL : 0 < L)

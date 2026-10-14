@@ -3,6 +3,7 @@ import Mathlib.Analysis.SpecificLimits.Basic
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Ring
 import Mathlib.Tactic.FieldSimp
+import QuasiNewtonConvergence.Potential
 
 /-!
 # Fixed-step gradient descent
@@ -104,30 +105,17 @@ theorem gradientDescent_convex_rate (f : E → ℝ) (gradient : E → E)
     have h := gradientStep_descent f gradient L hL hsmooth (x j)
     nlinarith [div_nonneg (sq_nonneg ‖gradient (x j)‖)
       (mul_nonneg (by norm_num : (0:ℝ) ≤ 2) hL.le)]
-  have hpot (j : ℕ) : (j : ℝ) * (f (x j) - f minimizer) +
-      L / 2 * ‖x j - minimizer‖ ^ 2 ≤
-        L / 2 * ‖x 0 - minimizer‖ ^ 2 := by
-    induction j with
-    | zero => simp
-    | succ j ih =>
-      have hp := gradientStep_convex_potential f gradient L hL hsmooth
-        hconvex (x j) minimizer
-      rw [← hstep j] at hp
-      have hm := mul_le_mul_of_nonneg_left (sub_le_sub_right (hmono j) (f minimizer))
-        (Nat.cast_nonneg j : (0:ℝ) ≤ j)
-      calc
-        ((j + 1 : ℕ) : ℝ) * (f (x (j + 1)) - f minimizer) +
-            L / 2 * ‖x (j + 1) - minimizer‖ ^ 2 =
-          (j : ℝ) * (f (x (j + 1)) - f minimizer) +
-            (f (x (j + 1)) - f minimizer +
-              L / 2 * ‖x (j + 1) - minimizer‖ ^ 2) := by push_cast; ring
-        _ ≤ (j : ℝ) * (f (x j) - f minimizer) +
-            L / 2 * ‖x j - minimizer‖ ^ 2 := by linarith
-        _ ≤ _ := ih
-  have h := hpot (k + 1)
-  have hnorm := mul_nonneg (div_nonneg hL.le (by norm_num : (0:ℝ) ≤ 2))
-    (sq_nonneg ‖x (k + 1) - minimizer‖)
-  nlinarith
+  apply potential_last_iterate_bound
+    (fun j => f (x j) - f minimizer)
+    (fun j => L / 2 * ‖x j - minimizer‖ ^ 2)
+    (fun j => sub_le_sub_right (hmono j) (f minimizer))
+  · intro j
+    have hp := gradientStep_convex_potential f gradient L hL hsmooth
+      hconvex (x j) minimizer
+    rw [← hstep j, mul_sub] at hp
+    exact hp
+  · intro j
+    exact mul_nonneg (div_nonneg hL.le (by norm_num)) (sq_nonneg _)
 
 /-- Strong convexity gives a Polyak–Łojasiewicz bound at a minimizer. -/
 theorem strongConvex_gradient_bound (f : E → ℝ) (gradient : E → E)

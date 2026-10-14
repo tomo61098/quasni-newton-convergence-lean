@@ -12,8 +12,10 @@ import Mathlib.Tactic.Ring
 The central algebraic identity is special to the log barrier: after a full
 Newton correction, each scaled stationarity residual is the negative square
 of the corresponding scaled Newton direction. The theorem below proves
-positivity and residual preservation from a certified Newton direction.
-The construction and local-norm bound for that direction remain separate.
+positivity, the explicit residual identity, and a Euclidean residual bound
+from a certified Newton direction. Orthogonality of the scaled multiplier
+then transfers that bound to the projected gradient at the new point.
+The construction and local-norm bound for the direction remain separate.
 -/
 
 noncomputable section
@@ -119,6 +121,78 @@ theorem logBarrier_squared_residual_norm_bound
       (∑ i, (u i) ^ 2) ^ 2 := by
   exact Finset.sum_sq_le_sq_sum_of_nonneg
     (s := Finset.univ) (fun i hi => sq_nonneg (u i))
+
+/-- The explicit Newton residual has Euclidean norm at most the square of
+the pre-step local norm. Keeping this norm bound, rather than only the
+coordinatewise bound, allows it to feed the next short-step estimate. -/
+theorem logBarrier_full_newton_euclidean_residual_invariant
+    {n : ℕ} (c x d q : Fin n → ℝ) (t ρ : ℝ)
+    (hx : ∀ i, 0 < x i) (hρ : 0 ≤ ρ) (hρone : ρ < 1)
+    (hnorm : ∑ i, (d i / x i) ^ 2 ≤ ρ ^ 2)
+    (hnewton : ∀ i,
+      t * c i - 1 / x i + d i / (x i) ^ 2 = q i) :
+    let xnew : Fin n → ℝ := fun i => x i + d i
+    let e : Fin n → ℝ := fun i => -(d i / x i) ^ 2
+    (∀ i, 0 < xnew i) ∧
+      (∀ i, xnew i * (t * c i - 1 / xnew i - q i) = e i) ∧
+      ‖(WithLp.toLp 2 e : EuclideanSpace ℝ (Fin n))‖ ≤ ρ ^ 2 ∧
+      (∀ i, t * c i - (1 + e i) / xnew i = q i) := by
+  let xnew : Fin n → ℝ := fun i => x i + d i
+  let e : Fin n → ℝ := fun i => -(d i / x i) ^ 2
+  have hxnew (i : Fin n) : 0 < xnew i :=
+    logBarrier_newton_coordinate_pos (x i) (d i) ρ (hx i) hρone
+      (logBarrier_local_norm_coordinate_bound
+        (fun j => d j / x j) ρ hρ hnorm i)
+  have hstationary (i : Fin n) :
+      t * c i - (1 + e i) / xnew i = q i := by
+    have hid := logBarrier_newton_residual_identity (x i) (d i)
+      (ne_of_gt (hx i)) (ne_of_gt (hxnew i))
+    dsimp [e, xnew]
+    rw [show 1 + -(d i / x i) ^ 2 = 1 - (d i / x i) ^ 2 by ring, hid]
+    linarith [hnewton i]
+  have hresidual (i : Fin n) :
+      xnew i * (t * c i - 1 / xnew i - q i) = e i := by
+    rw [← hstationary i]
+    field_simp [ne_of_gt (hxnew i)]
+    <;> ring
+  have hsumnonneg : 0 ≤ ∑ i, (d i / x i) ^ 2 :=
+    Finset.sum_nonneg (fun i hi => sq_nonneg _)
+  have hsum_sq : (∑ i, (d i / x i) ^ 2) ^ 2 ≤ (ρ ^ 2) ^ 2 :=
+    (sq_le_sq₀ hsumnonneg (sq_nonneg ρ)).mpr hnorm
+  have henorm : ‖(WithLp.toLp 2 e : EuclideanSpace ℝ (Fin n))‖ ≤ ρ ^ 2 := by
+    apply (sq_le_sq₀ (norm_nonneg _) (sq_nonneg ρ)).mp
+    rw [EuclideanSpace.real_norm_sq_eq]
+    simpa [e] using
+      (logBarrier_squared_residual_norm_bound (fun i => d i / x i)).trans hsum_sq
+  exact ⟨hxnew, hresidual, henorm, hstationary⟩
+
+/-- A multiplier orthogonal to the scaled feasible tangent space disappears
+under projection. Thus a Euclidean residual bound controls the projected
+scaled gradient, which is the quantity used by the short-step theorem. -/
+theorem logBarrier_projected_gradient_of_residual
+    {n : ℕ} (U : Submodule ℝ (EuclideanSpace ℝ (Fin n)))
+    [U.HasOrthogonalProjection]
+    (c x q e : Fin n → ℝ) (t β : ℝ)
+    (hx : ∀ i, x i ≠ 0)
+    (hstationary : ∀ i, t * c i - (1 + e i) / x i = q i)
+    (horth : (WithLp.toLp 2 (fun i => x i * q i) :
+      EuclideanSpace ℝ (Fin n)) ∈ Uᗮ)
+    (he : ‖(WithLp.toLp 2 e : EuclideanSpace ℝ (Fin n))‖ ≤ β) :
+    ‖U.starProjection (WithLp.toLp 2 (fun i => t * x i * c i - 1))‖ ≤ β := by
+  have hdecomp :
+      (WithLp.toLp 2 (fun i => t * x i * c i - 1) :
+        EuclideanSpace ℝ (Fin n)) =
+      WithLp.toLp 2 e + WithLp.toLp 2 (fun i => x i * q i) := by
+    ext i
+    change t * x i * c i - 1 = e i + x i * q i
+    rw [← hstationary i]
+    field_simp [hx i]
+    <;> ring
+  have hqzero : U.starProjection
+      (WithLp.toLp 2 (fun i => x i * q i)) = 0 :=
+    Submodule.starProjection_apply_eq_zero_iff.mpr horth
+  rw [hdecomp, map_add, hqzero, add_zero]
+  exact (U.norm_starProjection_apply_le _).trans he
 
 /-- A certified full Newton step keeps a coordinatewise centrality
 neighborhood. The new residual is exactly `-(dᵢ/xᵢ)^2`. -/

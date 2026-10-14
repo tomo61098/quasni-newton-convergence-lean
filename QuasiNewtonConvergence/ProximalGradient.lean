@@ -73,22 +73,16 @@ theorem proximalGradient_convex_rate (f g : E → ℝ) (gradient : E → E)
       L / 2 * ‖x 0 - u‖ ^ 2 := by
   have hmono (j : ℕ) : composite f g (x (j + 1)) ≤ composite f g (x j) :=
     proximal_descent f g gradient L hL hsmooth hconvex _ _ (hstep j)
-  have hpot (j : ℕ) : (j : ℝ) * (composite f g (x j) - composite f g u) +
-      L / 2 * ‖x j - u‖ ^ 2 ≤ L / 2 * ‖x 0 - u‖ ^ 2 := by
-    induction j with
-    | zero => simp
-    | succ j ih =>
-      have hp := proximal_three_point f g gradient L hsmooth hconvex
+  apply potential_last_iterate_bound
+    (fun j => composite f g (x j) - composite f g u)
+    (fun j => L / 2 * ‖x j - u‖ ^ 2)
+    (fun j => sub_le_sub_right (hmono j) (composite f g u))
+  · intro j
+    simpa only [mul_sub] using
+      proximal_three_point f g gradient L hsmooth hconvex
         (x j) (x (j + 1)) u (hstep j)
-      have hm := mul_le_mul_of_nonneg_left
-        (sub_le_sub_right (hmono j) (composite f g u))
-        (Nat.cast_nonneg j : (0:ℝ) ≤ j)
-      have hc : ((j + 1 : ℕ) : ℝ) = (j : ℝ) + 1 := by push_cast; ring
-      rw [hc]
-      nlinarith
-  have h := hpot (k + 1)
-  nlinarith [mul_nonneg (div_nonneg hL (by norm_num : (0:ℝ) ≤ 2))
-    (sq_nonneg ‖x (k + 1) - u‖)]
+  · intro j
+    exact mul_nonneg (div_nonneg hL (by norm_num)) (sq_nonneg _)
 
 /-- If the smooth part is strongly convex, its curvature improves the
 three-point inequality. -/

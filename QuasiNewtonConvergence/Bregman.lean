@@ -142,22 +142,11 @@ theorem bregman_potential_rate (F h : E → ℝ) (dh : E → E)
     (k : ℕ) :
     ((k + 1 : ℕ) : ℝ) * (F (x (k + 1)) - F u) ≤
       L * bregmanD h dh (x 0) u := by
-  have hinv (j : ℕ) : (j : ℝ) * (F (x j) - F u) +
-      L * bregmanD h dh (x j) u ≤
-        L * bregmanD h dh (x 0) u := by
-    induction j with
-    | zero => simp
-    | succ j ih =>
-      have hp := hpot j
-      have hm := mul_le_mul_of_nonneg_left
-        (sub_le_sub_right (hmono j) (F u))
-        (Nat.cast_nonneg j : (0 : ℝ) ≤ j)
-      have hc : ((j + 1 : ℕ) : ℝ) = (j : ℝ) + 1 := by push_cast; ring
-      rw [hc]
-      nlinarith
-  have hbound := hinv (k + 1)
-  have hd := bregmanD_nonneg h dh hkernel (x (k + 1)) u
-  nlinarith [hbound, mul_nonneg hL hd]
+  exact potential_last_iterate_bound (fun j => F (x j) - F u)
+    (fun j => L * bregmanD h dh (x j) u)
+    (fun j => sub_le_sub_right (hmono j) (F u))
+    (fun j => by simpa only [mul_sub] using hpot j)
+    (fun j => mul_nonneg hL (bregmanD_nonneg h dh hkernel (x j) u)) k
 
 /-- Composite mirror descent (Bregman gradient) has an O(1/k) last-iterate
 bound under convexity and relative smoothness. -/
