@@ -39,7 +39,7 @@ Let $n: \mathbb{N}$.
 Then
 
 $$
-\left\|\left(i\in I_{n}\mapsto 1\right)\right\| = \sqrt{n}
+\left\|\iota_2\left(\left(i\in I_{n}\mapsto 1\right)\right)\right\| = \sqrt{n}
 $$
 
 ## Theorem: `logBarrier_projected_cost_perturb_bound`
@@ -61,7 +61,7 @@ $$
 Set
 
 $$
-e:=\left(i\in I_{n}\mapsto 1\right)
+e:=\iota_2\left(\left(i\in I_{n}\mapsto 1\right)\right)
 $$
 
 Then
@@ -174,7 +174,7 @@ $$
 \begin{gathered}
 \forall i,\quad 0 < x_+\left(i\right)\\
 \land\quad \forall i,\quad x_+\left(i\right) \, \left(t \, c\left(i\right) - \frac{1}{x_+\left(i\right)} - q\left(i\right)\right) = e\left(i\right)\\
-\land\quad \left\|e\right\| \le \rho^{2}\\
+\land\quad \left\|\iota_2\left(e\right)\right\| \le \rho^{2}\\
 \land\quad \forall i,\quad t \, c\left(i\right) - \frac{1 + e\left(i\right)}{x_+\left(i\right)} = q\left(i\right)
 \end{gathered}
 $$
@@ -191,14 +191,14 @@ $U$ admits an orthogonal projection.
 
 $$
 \begin{gathered}
-\forall i,\quad x\left(i\right) \ne 0\\[4pt]\forall i,\quad t \, c\left(i\right) - \frac{1 + e\left(i\right)}{x\left(i\right)} = q\left(i\right)\\[4pt]\left(i\mapsto x\left(i\right) \, q\left(i\right)\right) \in \operatorname{Uᗮ}\\[4pt]\left\|e\right\| \le \beta
+\forall i,\quad x\left(i\right) \ne 0\\[4pt]\forall i,\quad t \, c\left(i\right) - \frac{1 + e\left(i\right)}{x\left(i\right)} = q\left(i\right)\\[4pt]\iota_2\left(\left(i\mapsto x\left(i\right) \, q\left(i\right)\right)\right) \in U^{\perp}\\[4pt]\left\|\iota_2\left(e\right)\right\| \le \beta
 \end{gathered}
 $$
 
 Then
 
 $$
-\left\|P_{U}\left(\left(i\mapsto t \, x\left(i\right) \, c\left(i\right) - 1\right)\right)\right\| \le \beta
+\left\|P_{U}\left(\iota_2\left(\left(i\mapsto t \, x\left(i\right) \, c\left(i\right) - 1\right)\right)\right)\right\| \le \beta
 $$
 
 ## Theorem: `logBarrier_full_newton_projected_invariant`
@@ -213,7 +213,7 @@ $U$ admits an orthogonal projection.
 
 $$
 \begin{gathered}
-\forall i,\quad 0 < x\left(i\right)\\[4pt]0 \le \rho\\[4pt]\rho < 1\\[4pt]\sum_{i} \left(\frac{d\left(i\right)}{x\left(i\right)}\right)^{2} \le \rho^{2}\\[4pt]\forall i,\quad t \, c\left(i\right) - \frac{1}{x\left(i\right)} + \frac{d\left(i\right)}{x\left(i\right)^{2}} = q\left(i\right)\\[4pt]\left(i\mapsto \left(x\left(i\right) + d\left(i\right)\right) \, q\left(i\right)\right) \in \operatorname{Uᗮ}
+\forall i,\quad 0 < x\left(i\right)\\[4pt]0 \le \rho\\[4pt]\rho < 1\\[4pt]\sum_{i} \left(\frac{d\left(i\right)}{x\left(i\right)}\right)^{2} \le \rho^{2}\\[4pt]\forall i,\quad t \, c\left(i\right) - \frac{1}{x\left(i\right)} + \frac{d\left(i\right)}{x\left(i\right)^{2}} = q\left(i\right)\\[4pt]\iota_2\left(\left(i\mapsto \left(x\left(i\right) + d\left(i\right)\right) \, q\left(i\right)\right)\right) \in U^{\perp}
 \end{gathered}
 $$
 
@@ -222,7 +222,7 @@ Then
 $$
 \begin{gathered}
 \forall i,\quad 0 < x\left(i\right) + d\left(i\right)\\
-\land\quad \left\|P_{U}\left(\left(i\mapsto t \, \left(x\left(i\right) + d\left(i\right)\right) \, c\left(i\right) - 1\right)\right)\right\| \le \rho^{2}
+\land\quad \left\|P_{U}\left(\iota_2\left(\left(i\mapsto t \, \left(x\left(i\right) + d\left(i\right)\right) \, c\left(i\right) - 1\right)\right)\right)\right\| \le \rho^{2}
 \end{gathered}
 $$
 
@@ -230,7 +230,7 @@ $$
 
 [Source](../../QuasiNewtonConvergence/LogBarrierNewtonInvariant.lean#L222)
 
-Let $n: \mathbb{N}$; $c, x, d, q: I_{n}\to \mathbb{R}$; $t, \rho: \mathbb{R}$; $\mathcal{F}: I_{n}\to \mathbb{R}\to \mathrm{Prop}$.
+Let $n: \mathbb{N}$; $c, x, d, q: I_{n}\to \mathbb{R}$; $t, \rho: \mathbb{R}$; $\mathcal{F}: \left(I_{n}\to \mathbb{R}\right)\to \mathrm{Prop}$.
 
 Assume all of the following.
 
@@ -259,7 +259,7 @@ $$
 
 [Source](../../QuasiNewtonConvergence/LogBarrierNewtonInvariant.lean#L264)
 
-Let $n: \mathbb{N}$; $c, x, d, q: I_{n}\to \mathbb{R}$; $t, \rho: \mathbb{R}$; $\mathcal{F}: I_{n}\to \mathbb{R}\to \mathrm{Prop}$.
+Let $n: \mathbb{N}$; $c, x, d, q: I_{n}\to \mathbb{R}$; $t, \rho: \mathbb{R}$; $\mathcal{F}: \left(I_{n}\to \mathbb{R}\right)\to \mathrm{Prop}$.
 
 Assume all of the following.
 
@@ -323,7 +323,7 @@ $$
 Set
 
 $$
-e:=\left(i\in I_{n}\mapsto 1\right)
+e:=\iota_2\left(\left(i\in I_{n}\mapsto 1\right)\right)
 $$
 
 Set
@@ -350,7 +350,7 @@ $U$ admits an orthogonal projection.
 
 $$
 \begin{gathered}
-\forall i,\quad 0 < x\left(i\right)\\[4pt]0 \le \rho\\[4pt]\rho \le \frac{21}{64}\\[4pt]\sum_{i} \left(\frac{d\left(i\right)}{x\left(i\right)}\right)^{2} \le \rho^{2}\\[4pt]\forall i,\quad t \, c\left(i\right) - \frac{1}{x\left(i\right)} + \frac{d\left(i\right)}{x\left(i\right)^{2}} = q\left(i\right)\\[4pt]\left(i\mapsto \left(x\left(i\right) + d\left(i\right)\right) \, q\left(i\right)\right) \in \operatorname{Uᗮ}
+\forall i,\quad 0 < x\left(i\right)\\[4pt]0 \le \rho\\[4pt]\rho \le \frac{21}{64}\\[4pt]\sum_{i} \left(\frac{d\left(i\right)}{x\left(i\right)}\right)^{2} \le \rho^{2}\\[4pt]\forall i,\quad t \, c\left(i\right) - \frac{1}{x\left(i\right)} + \frac{d\left(i\right)}{x\left(i\right)^{2}} = q\left(i\right)\\[4pt]\iota_2\left(\left(i\mapsto \left(x\left(i\right) + d\left(i\right)\right) \, q\left(i\right)\right)\right) \in U^{\perp}
 \end{gathered}
 $$
 
@@ -359,7 +359,7 @@ Then
 $$
 \begin{gathered}
 \forall i,\quad 0 < x\left(i\right) + d\left(i\right)\\
-\land\quad \left\|P_{U}\left(\left(i\mapsto t \, \left(x\left(i\right) + d\left(i\right)\right) \, c\left(i\right) - 1\right)\right)\right\| \le \frac{1}{4}
+\land\quad \left\|P_{U}\left(\iota_2\left(\left(i\mapsto t \, \left(x\left(i\right) + d\left(i\right)\right) \, c\left(i\right) - 1\right)\right)\right)\right\| \le \frac{1}{4}
 \end{gathered}
 $$
 
@@ -375,7 +375,7 @@ $U$ admits an orthogonal projection.
 
 $$
 \begin{gathered}
-1 \le n\\[4pt]\forall i,\quad 0 < x\left(i\right)\\[4pt]0 \le \rho\\[4pt]\rho \le \frac{21}{64}\\[4pt]\sum_{i} \left(\frac{d\left(i\right)}{x\left(i\right)}\right)^{2} \le \rho^{2}\\[4pt]\forall i,\quad t \, c\left(i\right) - \frac{1}{x\left(i\right)} + \frac{d\left(i\right)}{x\left(i\right)^{2}} = q\left(i\right)\\[4pt]\left(i\mapsto \left(x\left(i\right) + d\left(i\right)\right) \, q\left(i\right)\right) \in \operatorname{Uᗮ}
+1 \le n\\[4pt]\forall i,\quad 0 < x\left(i\right)\\[4pt]0 \le \rho\\[4pt]\rho \le \frac{21}{64}\\[4pt]\sum_{i} \left(\frac{d\left(i\right)}{x\left(i\right)}\right)^{2} \le \rho^{2}\\[4pt]\forall i,\quad t \, c\left(i\right) - \frac{1}{x\left(i\right)} + \frac{d\left(i\right)}{x\left(i\right)^{2}} = q\left(i\right)\\[4pt]\iota_2\left(\left(i\mapsto \left(x\left(i\right) + d\left(i\right)\right) \, q\left(i\right)\right)\right) \in U^{\perp}
 \end{gathered}
 $$
 
@@ -384,7 +384,7 @@ Then
 $$
 \begin{gathered}
 \forall i,\quad 0 < x\left(i\right) + d\left(i\right)\\
-\land\quad \left\|P_{U}\left(\left(i\mapsto \left(1 + \frac{1}{16 \, \sqrt{n}}\right) \, t \, \left(x\left(i\right) + d\left(i\right)\right) \, c\left(i\right) - 1\right)\right)\right\| \le \frac{21}{64}
+\land\quad \left\|P_{U}\left(\iota_2\left(\left(i\mapsto \left(1 + \frac{1}{16 \, \sqrt{n}}\right) \, t \, \left(x\left(i\right) + d\left(i\right)\right) \, c\left(i\right) - 1\right)\right)\right)\right\| \le \frac{21}{64}
 \end{gathered}
 $$
 
@@ -392,7 +392,7 @@ $$
 
 [Source](../../QuasiNewtonConvergence/LogBarrierNewtonInvariant.lean#L397)
 
-Let $n: \mathbb{N}$; $c, x, d, q: I_{n}\to \mathbb{R}$; $t, \rho: \mathbb{R}$; $\mathcal{F}: I_{n}\to \mathbb{R}\to \mathrm{Prop}$.
+Let $n: \mathbb{N}$; $c, x, d, q: I_{n}\to \mathbb{R}$; $t, \rho: \mathbb{R}$; $\mathcal{F}: \left(I_{n}\to \mathbb{R}\right)\to \mathrm{Prop}$.
 
 Assume all of the following.
 

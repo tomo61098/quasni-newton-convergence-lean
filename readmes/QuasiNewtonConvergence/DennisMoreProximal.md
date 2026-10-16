@@ -251,13 +251,13 @@ Assume all of the following.
 
 $$
 \begin{gathered}
-0 < \mu\\[4pt]0 < m\\[4pt]0 \le M\\[4pt]0 \le G\\[4pt]0 \le L\\[4pt]\forall v,\quad \mu \, \left\|v\right\|^{2} \le \left\langle \mathcal{H}\left(x_\star,\,v\right),v\right\rangle\\[4pt]\forall k,v,\quad m \, \left\|v\right\|^{2} \le \left\langle \operatorname{run.B}\left(k,\,v\right),v\right\rangle\\[4pt]\forall k,v,\quad \left\|\operatorname{run.B}\left(k,\,v\right)\right\| \le M \, \left\|v\right\|\\[4pt]\forall k,\quad \left\|G\left(\operatorname{run.x}\left(k\right)\right) - G\left(x_\star\right)\right\| \le G \, \left\|\operatorname{run.x}\left(k\right) - x_\star\right\|\\[4pt]\forall y,\quad D G\left(y\right) = \mathcal{H}\left(y\right)\\[4pt]\forall y,z,\quad \left\|\mathcal{H}\left(y\right) - \mathcal{H}\left(z\right)\right\| \le L \, \left\|y - z\right\|\\[4pt]\forall u,\quad g\left(u\right) - g\left(x_\star\right) \ge \left\langle -G\left(x_\star\right),u - x_\star\right\rangle\\[4pt]\operatorname{DennisMoreOnSteps}\left(\operatorname{run.B},\,\mathcal{H}\left(x_\star\right),\,\operatorname{run.x},\,\delta\right)\\[4pt]\forall k,\quad 0 \le \delta\left(k\right)\\[4pt]\lim_{k\to\infty} \operatorname{run.x}\left(k\right) = x_\star\\[4pt]\lim_{k\to\infty} \delta\left(k\right) = 0
+0 < \mu\\[4pt]0 < m\\[4pt]0 \le M\\[4pt]0 \le G\\[4pt]0 \le L\\[4pt]\forall v,\quad \mu \, \left\|v\right\|^{2} \le \left\langle \mathcal{H}\left(x_\star,\,v\right),v\right\rangle\\[4pt]\forall k,v,\quad m \, \left\|v\right\|^{2} \le \left\langle \operatorname{run}_{B}\left(k,\,v\right),v\right\rangle\\[4pt]\forall k,v,\quad \left\|\operatorname{run}_{B}\left(k,\,v\right)\right\| \le M \, \left\|v\right\|\\[4pt]\forall k,\quad \left\|G\left(\operatorname{run}_{x}\left(k\right)\right) - G\left(x_\star\right)\right\| \le G \, \left\|\operatorname{run}_{x}\left(k\right) - x_\star\right\|\\[4pt]\forall y,\quad D G\left(y\right) = \mathcal{H}\left(y\right)\\[4pt]\forall y,z,\quad \left\|\mathcal{H}\left(y\right) - \mathcal{H}\left(z\right)\right\| \le L \, \left\|y - z\right\|\\[4pt]\forall u,\quad g\left(u\right) - g\left(x_\star\right) \ge \left\langle -G\left(x_\star\right),u - x_\star\right\rangle\\[4pt]\operatorname{DennisMoreOnSteps}\left(\operatorname{run}_{B},\,\mathcal{H}\left(x_\star\right),\,\operatorname{run}_{x},\,\delta\right)\\[4pt]\forall k,\quad 0 \le \delta\left(k\right)\\[4pt]\lim_{k\to\infty} \operatorname{run}_{x}\left(k\right) = x_\star\\[4pt]\lim_{k\to\infty} \delta\left(k\right) = 0
 \end{gathered}
 $$
 
 Then
 
 $$
-\lim_{k\to\infty} \frac{\left\|\operatorname{run.x}\left(k + 1\right) - x_\star\right\|}{\left\|\operatorname{run.x}\left(k\right) - x_\star\right\|} = 0
+\lim_{k\to\infty} \frac{\left\|\operatorname{run}_{x}\left(k + 1\right) - x_\star\right\|}{\left\|\operatorname{run}_{x}\left(k\right) - x_\star\right\|} = 0
 $$
 

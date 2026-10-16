@@ -28,6 +28,10 @@ mathematics uses `$...$`; display mathematics uses `$$...$$`.
 - $P_U$ is orthogonal projection onto $U$, with its output viewed in the ambient
   space; $U^\perp$ is the orthogonal complement. $I$ denotes the identity map
   (and the numeral $1$ in matrix or endomorphism arithmetic denotes its identity).
+- $\iota_2:(I_n\to\mathbb R)\longrightarrow\mathbb R^n$ identifies a coordinate
+  function with the corresponding Euclidean vector (`WithLp.toLp 2` in Lean).
+- For a run record $r$, subscripts such as $r_x$, $r_B$, $r_H$, and $r_\alpha$
+  denote its named fields.
 - An assertion $\sum_{k=0}^{\infty}|a(k)|<\infty$ translates `Summable a`
   for the real sequences here. Limits are along natural-number indices tending to infinity.
 - Finite sums and products with an unqualified index range over the complete

@@ -17,7 +17,7 @@ Let $a: E$.
 Define
 
 $$
-\operatorname{innerLinear}(a)(z)=\langle a,z\rangle.
+\operatorname{innerLinear}(a)(z)=\langle a,z\rangle\quad(z\in E).
 $$
 
 ## Theorem: `trace_rankOne` (private helper)

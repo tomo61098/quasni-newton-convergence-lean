@@ -140,7 +140,7 @@ Let $a, b: E$.
 Define
 
 $$
-\operatorname{rankOne}(a,b)(z)=\langle a,z\rangle b.
+\operatorname{rankOne}(a,b)(z)=\langle a,z\rangle b\quad(z\in E).
 $$
 
 ## Definition: `bfgsUpdateMap`
@@ -297,11 +297,11 @@ Let $\operatorname{method}: \operatorname{HessianUpdateMethod}$; $B: \mathcal{L}
 Define
 
 $$
-\operatorname{hessianUpdate}(m,B,s,y)=\begin{cases}
-\operatorname{bfgsUpdateMap}(B,s,y)&m=\mathrm{BFGS},\\
-\operatorname{dfpUpdateMap}(B,s,y)&m=\mathrm{DFP},\\
-\operatorname{sr1UpdateSafeguardedMap}(\rho,B,s,y)&m=\mathrm{SR1}(\rho),\\
-\operatorname{broydenUpdateMap}(B,s,y,\varphi)&m=\mathrm{Broyden}(\varphi).
+\operatorname{hessianUpdate}(\operatorname{method},B,s,y)=\begin{cases}
+\operatorname{bfgsUpdateMap}(B,s,y)&\operatorname{method}=\mathrm{BFGS},\\
+\operatorname{dfpUpdateMap}(B,s,y)&\operatorname{method}=\mathrm{DFP},\\
+\operatorname{sr1UpdateSafeguardedMap}(\rho,B,s,y)&\operatorname{method}=\mathrm{SR1}(\rho),\\
+\operatorname{broydenUpdateMap}(B,s,y,\varphi)&\operatorname{method}=\mathrm{Broyden}(\varphi).
 \end{cases}
 $$
 

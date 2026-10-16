@@ -220,7 +220,7 @@ Let $n: \mathbb{N}$.
 Define
 
 $$
-\operatorname{coordSum}(n)(x)=\sum_{i=0}^{n-1}x(i).
+\operatorname{coordSum}(n)(x)=\sum_{i=0}^{n-1}x(i)\quad(x\in\mathbb R^n).
 $$
 
 ## Definition: `karmarkarFeasibleTangent`

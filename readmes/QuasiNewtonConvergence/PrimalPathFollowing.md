@@ -24,7 +24,7 @@ $$
 
 [Source](../../QuasiNewtonConvergence/PrimalPathFollowing.lean#L26)
 
-Let $n: \mathbb{N}$; $c, x: I_{n}\to \mathbb{R}$; $t: \mathbb{R}$; $\mathcal{F}: I_{n}\to \mathbb{R}\to \mathrm{Prop}$.
+Let $n: \mathbb{N}$; $c, x: I_{n}\to \mathbb{R}$; $t: \mathbb{R}$; $\mathcal{F}: \left(I_{n}\to \mathbb{R}\right)\to \mathrm{Prop}$.
 
 Define
 
@@ -56,7 +56,7 @@ $$
 
 [Source](../../QuasiNewtonConvergence/PrimalPathFollowing.lean#L59)
 
-Let $n: \mathbb{N}$; $c, x: I_{n}\to \mathbb{R}$; $t, \beta: \mathbb{R}$; $\mathcal{F}: I_{n}\to \mathbb{R}\to \mathrm{Prop}$.
+Let $n: \mathbb{N}$; $c, x: I_{n}\to \mathbb{R}$; $t, \beta: \mathbb{R}$; $\mathcal{F}: \left(I_{n}\to \mathbb{R}\right)\to \mathrm{Prop}$.
 
 Define
 
@@ -88,7 +88,7 @@ $$
 
 [Source](../../QuasiNewtonConvergence/PrimalPathFollowing.lean#L107)
 
-Let $n: \mathbb{N}$; $c, x, z: I_{n}\to \mathbb{R}$; $t: \mathbb{R}$; $\mathcal{F}: I_{n}\to \mathbb{R}\to \mathrm{Prop}$; $\operatorname{hzfeas}: z\in\mathcal{F}$.
+Let $n: \mathbb{N}$; $c, x, z: I_{n}\to \mathbb{R}$; $t: \mathbb{R}$; $\mathcal{F}: \left(I_{n}\to \mathbb{R}\right)\to \mathrm{Prop}$; $\operatorname{hzfeas}: z\in\mathcal{F}$.
 
 Assume all of the following.
 
@@ -120,7 +120,7 @@ $$
 
 [Source](../../QuasiNewtonConvergence/PrimalPathFollowing.lean#L122)
 
-Let $n: \mathbb{N}$; $c, z: I_{n}\to \mathbb{R}$; $x: \mathbb{N}\to I_{n}\to \mathbb{R}$; $\mathcal{F}: I_{n}\to \mathbb{R}\to \mathrm{Prop}$; $t_{0}, \gamma: \mathbb{R}$; $\operatorname{hzfeas}: z\in\mathcal{F}$; $k: \mathbb{N}$.
+Let $n: \mathbb{N}$; $c, z: I_{n}\to \mathbb{R}$; $x: \mathbb{N}\to I_{n}\to \mathbb{R}$; $\mathcal{F}: \left(I_{n}\to \mathbb{R}\right)\to \mathrm{Prop}$; $t_{0}, \gamma: \mathbb{R}$; $\operatorname{hzfeas}: z\in\mathcal{F}$; $k: \mathbb{N}$.
 
 Assume all of the following.
 
@@ -180,7 +180,7 @@ $$
 
 [Source](../../QuasiNewtonConvergence/PrimalPathFollowing.lean#L190)
 
-Let $n: \mathbb{N}$; $c, z: I_{n}\to \mathbb{R}$; $x: \mathbb{N}\to I_{n}\to \mathbb{R}$; $\mathcal{F}: I_{n}\to \mathbb{R}\to \mathrm{Prop}$; $t_{0}, \gamma, \beta, \varepsilon: \mathbb{R}$; $\operatorname{hzfeas}: z\in\mathcal{F}$; $k: \mathbb{N}$.
+Let $n: \mathbb{N}$; $c, z: I_{n}\to \mathbb{R}$; $x: \mathbb{N}\to I_{n}\to \mathbb{R}$; $\mathcal{F}: \left(I_{n}\to \mathbb{R}\right)\to \mathrm{Prop}$; $t_{0}, \gamma, \beta, \varepsilon: \mathbb{R}$; $\operatorname{hzfeas}: z\in\mathcal{F}$; $k: \mathbb{N}$.
 
 Assume all of the following.
 
@@ -200,7 +200,7 @@ $$
 
 [Source](../../QuasiNewtonConvergence/PrimalPathFollowing.lean#L218)
 
-Let $n: \mathbb{N}$; $c, z: I_{n}\to \mathbb{R}$; $x: \mathbb{N}\to I_{n}\to \mathbb{R}$; $\mathcal{F}: I_{n}\to \mathbb{R}\to \mathrm{Prop}$; $t_{0}, \gamma, \varepsilon: \mathbb{R}$; $\operatorname{hzfeas}: z\in\mathcal{F}$; $k: \mathbb{N}$.
+Let $n: \mathbb{N}$; $c, z: I_{n}\to \mathbb{R}$; $x: \mathbb{N}\to I_{n}\to \mathbb{R}$; $\mathcal{F}: \left(I_{n}\to \mathbb{R}\right)\to \mathrm{Prop}$; $t_{0}, \gamma, \varepsilon: \mathbb{R}$; $\operatorname{hzfeas}: z\in\mathcal{F}$; $k: \mathbb{N}$.
 
 Assume all of the following.
 
@@ -240,7 +240,7 @@ $$
 
 [Source](../../QuasiNewtonConvergence/PrimalPathFollowing.lean#L267)
 
-Let $n: \mathbb{N}$; $c, z: I_{n}\to \mathbb{R}$; $x: \mathbb{N}\to I_{n}\to \mathbb{R}$; $\mathcal{F}: I_{n}\to \mathbb{R}\to \mathrm{Prop}$; $t_{0}, \varepsilon: \mathbb{R}$; $\operatorname{hzfeas}: z\in\mathcal{F}$; $k: \mathbb{N}$.
+Let $n: \mathbb{N}$; $c, z: I_{n}\to \mathbb{R}$; $x: \mathbb{N}\to I_{n}\to \mathbb{R}$; $\mathcal{F}: \left(I_{n}\to \mathbb{R}\right)\to \mathrm{Prop}$; $t_{0}, \varepsilon: \mathbb{R}$; $\operatorname{hzfeas}: z\in\mathcal{F}$; $k: \mathbb{N}$.
 
 Assume all of the following.
 
@@ -280,7 +280,7 @@ $$
 
 [Source](../../QuasiNewtonConvergence/PrimalPathFollowing.lean#L334)
 
-Let $n: \mathbb{N}$; $c, z: I_{n}\to \mathbb{R}$; $x: \mathbb{N}\to I_{n}\to \mathbb{R}$; $\mathcal{F}: I_{n}\to \mathbb{R}\to \mathrm{Prop}$; $t_{0}, \beta, \varepsilon: \mathbb{R}$; $\operatorname{hzfeas}: z\in\mathcal{F}$; $k: \mathbb{N}$.
+Let $n: \mathbb{N}$; $c, z: I_{n}\to \mathbb{R}$; $x: \mathbb{N}\to I_{n}\to \mathbb{R}$; $\mathcal{F}: \left(I_{n}\to \mathbb{R}\right)\to \mathrm{Prop}$; $t_{0}, \beta, \varepsilon: \mathbb{R}$; $\operatorname{hzfeas}: z\in\mathcal{F}$; $k: \mathbb{N}$.
 
 Assume all of the following.
 
@@ -320,7 +320,7 @@ $$
 
 [Source](../../QuasiNewtonConvergence/PrimalPathFollowing.lean#L388)
 
-Let $n: \mathbb{N}$; $c, z: I_{n}\to \mathbb{R}$; $x: \mathbb{N}\to I_{n}\to \mathbb{R}$; $\mathcal{F}: I_{n}\to \mathbb{R}\to \mathrm{Prop}$; $t_{0}, \beta, \varepsilon: \mathbb{R}$; $\operatorname{hzfeas}: z\in\mathcal{F}$; $k: \mathbb{N}$.
+Let $n: \mathbb{N}$; $c, z: I_{n}\to \mathbb{R}$; $x: \mathbb{N}\to I_{n}\to \mathbb{R}$; $\mathcal{F}: \left(I_{n}\to \mathbb{R}\right)\to \mathrm{Prop}$; $t_{0}, \beta, \varepsilon: \mathbb{R}$; $\operatorname{hzfeas}: z\in\mathcal{F}$; $k: \mathbb{N}$.
 
 Assume all of the following.
 

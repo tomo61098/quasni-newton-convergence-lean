@@ -316,13 +316,13 @@ $$
 
 [Source](../../QuasiNewtonConvergence/Bregman.lean#L346)
 
-Let $h: E\to \mathbb{R}$; $\operatorname{dh}: E\to E$; $x: \mathbb{N}\to E$; $u: E$; $q, κ: \mathbb{R}$.
+Let $h: E\to \mathbb{R}$; $\operatorname{dh}: E\to E$; $x: \mathbb{N}\to E$; $u: E$; $q, \kappa: \mathbb{R}$.
 
 Assume all of the following.
 
 $$
 \begin{gathered}
-0 \le q\\[4pt]q < 1\\[4pt]0 < κ\\[4pt]\operatorname{ConvexFirstOrder}\left(h,\,\operatorname{dh}\right)\\[4pt]\forall v,\quad κ \, \left\|v - u\right\|^{2} \le \operatorname{D}\left(h,\,\operatorname{dh},\,v,\,u\right)\\[4pt]\forall k,\quad \operatorname{D}\left(h,\,\operatorname{dh},\,x\left(k\right),\,u\right) \le q^{k} \, \operatorname{D}\left(h,\,\operatorname{dh},\,x\left(0\right),\,u\right)
+0 \le q\\[4pt]q < 1\\[4pt]0 < \kappa\\[4pt]\operatorname{ConvexFirstOrder}\left(h,\,\operatorname{dh}\right)\\[4pt]\forall v,\quad \kappa \, \left\|v - u\right\|^{2} \le \operatorname{D}\left(h,\,\operatorname{dh},\,v,\,u\right)\\[4pt]\forall k,\quad \operatorname{D}\left(h,\,\operatorname{dh},\,x\left(k\right),\,u\right) \le q^{k} \, \operatorname{D}\left(h,\,\operatorname{dh},\,x\left(0\right),\,u\right)
 \end{gathered}
 $$
 
@@ -336,13 +336,13 @@ $$
 
 [Source](../../QuasiNewtonConvergence/Bregman.lean#L382)
 
-Let $f, g, h: E\to \mathbb{R}$; $G, \operatorname{dh}: E\to E$; $L, \mu, κ: \mathbb{R}$; $x: \mathbb{N}\to E$; $u: E$.
+Let $f, g, h: E\to \mathbb{R}$; $G, \operatorname{dh}: E\to E$; $L, \mu, \kappa: \mathbb{R}$; $x: \mathbb{N}\to E$; $u: E$.
 
 Assume all of the following.
 
 $$
 \begin{gathered}
-0 < L\\[4pt]0 < \mu\\[4pt]\mu \le L\\[4pt]0 < κ\\[4pt]\operatorname{RelSmooth}\left(f,\,h,\,G,\,\operatorname{dh},\,L\right)\\[4pt]\operatorname{RelStrong}\left(f,\,h,\,G,\,\operatorname{dh},\,\mu\right)\\[4pt]\operatorname{ConvexFirstOrder}\left(h,\,\operatorname{dh}\right)\\[4pt]\forall v,\quad \operatorname{composite}\left(f,\,g,\,u\right) \le \operatorname{composite}\left(f,\,g,\,v\right)\\[4pt]\forall v,\quad κ \, \left\|v - u\right\|^{2} \le \operatorname{D}\left(h,\,\operatorname{dh},\,v,\,u\right)\\[4pt]\forall k,\quad \operatorname{BregmanGradOpt}\left(g,\,G,\,\operatorname{dh},\,L,\,x\left(k\right),\,x\left(k + 1\right)\right)
+0 < L\\[4pt]0 < \mu\\[4pt]\mu \le L\\[4pt]0 < \kappa\\[4pt]\operatorname{RelSmooth}\left(f,\,h,\,G,\,\operatorname{dh},\,L\right)\\[4pt]\operatorname{RelStrong}\left(f,\,h,\,G,\,\operatorname{dh},\,\mu\right)\\[4pt]\operatorname{ConvexFirstOrder}\left(h,\,\operatorname{dh}\right)\\[4pt]\forall v,\quad \operatorname{composite}\left(f,\,g,\,u\right) \le \operatorname{composite}\left(f,\,g,\,v\right)\\[4pt]\forall v,\quad \kappa \, \left\|v - u\right\|^{2} \le \operatorname{D}\left(h,\,\operatorname{dh},\,v,\,u\right)\\[4pt]\forall k,\quad \operatorname{BregmanGradOpt}\left(g,\,G,\,\operatorname{dh},\,L,\,x\left(k\right),\,x\left(k + 1\right)\right)
 \end{gathered}
 $$
 
@@ -356,13 +356,13 @@ $$
 
 [Source](../../QuasiNewtonConvergence/Bregman.lean#L405)
 
-Let $F, h: E\to \mathbb{R}$; $\operatorname{dh}: E\to E$; $L, \mu, κ: \mathbb{R}$; $x: \mathbb{N}\to E$; $u: E$.
+Let $F, h: E\to \mathbb{R}$; $\operatorname{dh}: E\to E$; $L, \mu, \kappa: \mathbb{R}$; $x: \mathbb{N}\to E$; $u: E$.
 
 Assume all of the following.
 
 $$
 \begin{gathered}
-0 \le L\\[4pt]0 < \mu\\[4pt]0 < κ\\[4pt]\operatorname{ConvexFirstOrder}\left(h,\,\operatorname{dh}\right)\\[4pt]\forall v,\quad \mu \, \operatorname{D}\left(h,\,\operatorname{dh},\,v,\,u\right) \le F\left(v\right) - F\left(u\right)\\[4pt]\forall v,\quad κ \, \left\|v - u\right\|^{2} \le \operatorname{D}\left(h,\,\operatorname{dh},\,v,\,u\right)\\[4pt]\forall k,\quad \operatorname{BregmanProxOpt}\left(F,\,h,\,\operatorname{dh},\,L,\,x\left(k\right),\,x\left(k + 1\right)\right)
+0 \le L\\[4pt]0 < \mu\\[4pt]0 < \kappa\\[4pt]\operatorname{ConvexFirstOrder}\left(h,\,\operatorname{dh}\right)\\[4pt]\forall v,\quad \mu \, \operatorname{D}\left(h,\,\operatorname{dh},\,v,\,u\right) \le F\left(v\right) - F\left(u\right)\\[4pt]\forall v,\quad \kappa \, \left\|v - u\right\|^{2} \le \operatorname{D}\left(h,\,\operatorname{dh},\,v,\,u\right)\\[4pt]\forall k,\quad \operatorname{BregmanProxOpt}\left(F,\,h,\,\operatorname{dh},\,L,\,x\left(k\right),\,x\left(k + 1\right)\right)
 \end{gathered}
 $$
 

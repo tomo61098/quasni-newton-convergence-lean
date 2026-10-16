@@ -176,7 +176,7 @@ Assume all of the following.
 
 $$
 \begin{gathered}
-0 < c_{1}\\[4pt]c_{2} < 1\\[4pt]0 < L\\[4pt]0 < m\\[4pt]0 < M\\[4pt]0 < \mu\\[4pt]\forall k,\quad 0 \le \operatorname{run.α}\left(k\right)\\[4pt]\forall k,\quad m \, \left\|G\left(\operatorname{run.x}\left(k\right)\right)\right\|^{2} \le \left\langle G\left(\operatorname{run.x}\left(k\right)\right),\operatorname{run.H}\left(k,\,G\left(\operatorname{run.x}\left(k\right)\right)\right)\right\rangle\\[4pt]\forall k,\quad \left\|\operatorname{run.H}\left(k\right)\right\| \le M\\[4pt]\forall k,\quad \ell_{\rm low} \le f\left(\operatorname{run.x}\left(k\right)\right)\\[4pt]\forall u,v,\quad \left\|G\left(v\right) - G\left(u\right)\right\| \le L \, \left\|v - u\right\|\\[4pt]\forall k,\quad \operatorname{WolfeStep}\left(c_{1},\,c_{2},\,\operatorname{run.α}\left(k\right),\,\left\langle G\left(\operatorname{run.x}\left(k\right)\right),\operatorname{quasiNewtonDirection}\left(\operatorname{run.H}\left(k\right),\,G\left(\operatorname{run.x}\left(k\right)\right)\right)\right\rangle,\,\left\langle G\left(\operatorname{run.x}\left(k + 1\right)\right),\operatorname{quasiNewtonDirection}\left(\operatorname{run.H}\left(k\right),\,G\left(\operatorname{run.x}\left(k\right)\right)\right)\right\rangle,\,f\left(\operatorname{run.x}\left(k\right)\right),\,f\left(\operatorname{run.x}\left(k + 1\right)\right)\right)\\[4pt]G\left(x_\star\right) = 0\\[4pt]\operatorname{SmoothUpper}\left(f,\,G,\,L\right)\\[4pt]\operatorname{StrongConvexFirstOrder}\left(f,\,G,\,\mu\right)
+0 < c_{1}\\[4pt]c_{2} < 1\\[4pt]0 < L\\[4pt]0 < m\\[4pt]0 < M\\[4pt]0 < \mu\\[4pt]\forall k,\quad 0 \le \operatorname{run}_{\alpha}\left(k\right)\\[4pt]\forall k,\quad m \, \left\|G\left(\operatorname{run}_{x}\left(k\right)\right)\right\|^{2} \le \left\langle G\left(\operatorname{run}_{x}\left(k\right)\right),\operatorname{run}_{H}\left(k,\,G\left(\operatorname{run}_{x}\left(k\right)\right)\right)\right\rangle\\[4pt]\forall k,\quad \left\|\operatorname{run}_{H}\left(k\right)\right\| \le M\\[4pt]\forall k,\quad \ell_{\rm low} \le f\left(\operatorname{run}_{x}\left(k\right)\right)\\[4pt]\forall u,v,\quad \left\|G\left(v\right) - G\left(u\right)\right\| \le L \, \left\|v - u\right\|\\[4pt]\forall k,\quad \operatorname{WolfeStep}\left(c_{1},\,c_{2},\,\operatorname{run}_{\alpha}\left(k\right),\,\left\langle G\left(\operatorname{run}_{x}\left(k\right)\right),\operatorname{quasiNewtonDirection}\left(\operatorname{run}_{H}\left(k\right),\,G\left(\operatorname{run}_{x}\left(k\right)\right)\right)\right\rangle,\,\left\langle G\left(\operatorname{run}_{x}\left(k + 1\right)\right),\operatorname{quasiNewtonDirection}\left(\operatorname{run}_{H}\left(k\right),\,G\left(\operatorname{run}_{x}\left(k\right)\right)\right)\right\rangle,\,f\left(\operatorname{run}_{x}\left(k\right)\right),\,f\left(\operatorname{run}_{x}\left(k + 1\right)\right)\right)\\[4pt]G\left(x_\star\right) = 0\\[4pt]\operatorname{SmoothUpper}\left(f,\,G,\,L\right)\\[4pt]\operatorname{StrongConvexFirstOrder}\left(f,\,G,\,\mu\right)
 \end{gathered}
 $$
 
@@ -184,8 +184,8 @@ Then
 
 $$
 \begin{gathered}
-\lim_{k\to\infty} \operatorname{run.x}\left(k\right) = x_\star\\
-\land\quad \lim_{k\to\infty} f\left(\operatorname{run.x}\left(k\right)\right) = f\left(x_\star\right)
+\lim_{k\to\infty} \operatorname{run}_{x}\left(k\right) = x_\star\\
+\land\quad \lim_{k\to\infty} f\left(\operatorname{run}_{x}\left(k\right)\right) = f\left(x_\star\right)
 \end{gathered}
 $$
 
