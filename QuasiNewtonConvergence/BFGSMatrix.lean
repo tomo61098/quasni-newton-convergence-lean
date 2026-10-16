@@ -81,6 +81,7 @@ theorem positiveDefinite_trace_sub_log_det (B : E →ₗ[ℝ] E)
   classical
   let hS : B.IsSymmetric := hSym
   rw [hS.trace_eq_sum_eigenvalues rfl, hS.det_eq_prod_eigenvalues rfl]
+  simp only [RCLike.ofReal_real_eq_id, id_eq]
   rw [Real.log_prod (fun i _ => ne_of_gt (positive_eigenvalues B hB hSym i))]
   have hsum := Finset.sum_le_sum (s := Finset.univ) (fun i _ =>
     Real.log_le_sub_one_of_pos (positive_eigenvalues B hB hSym i))

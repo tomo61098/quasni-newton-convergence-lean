@@ -180,10 +180,14 @@ and a nonzero integer basis determinant.
 Hadamard's inequality bounds the absolute determinant by a number
 \(D\le2^{\operatorname{poly}(n,B)}\). Consequently, a strictly positive
 objective value at a vertex is at least \(1/D\). Choose
-\(\varepsilon<1/D\). Starting from \(x^{(k)}\), move along feasible
-directions of nonincreasing objective until reaching a vertex. Each move
-sets at least one positive coordinate to zero, so at most \(n\) such
-linear-algebra steps are needed. The resulting vertex has objective below
+\(\varepsilon=1/(2D)<1/D\), which has polynomial encoding length.
+Starting from \(x^{(k)}\), restrict directions to its positive support.
+If the corresponding columns of the augmented constraint matrix are
+dependent, choose a nonzero nullspace direction, orient it to make the
+objective nonincreasing, and move to the boundary. Each move retains the
+existing zero coordinates and sets at least one more coordinate to zero.
+After at most \(n\) such linear-algebra steps the supported columns are
+independent, so the point is a vertex. The resulting vertex has objective below
 \(1/D\), and therefore has objective **exactly zero**. This gives an
 optimal rational certificate. Since \(\log D=\operatorname{poly}(n,B)\),
 (7) gives a polynomial iteration bound. Karmarkar's determinant-based
@@ -230,8 +234,8 @@ Equation (3) and the inverse map give the coordinate-wise estimate
 
 If the combined step-approximation and rounding error is within one tenth of
 the current minimum coordinate **inside the fixed feasible affine space**,
-its next coordinates remain at least half their previous values. Up to the polynomial iteration
-limit \(K\), all coordinates are therefore at least \(1/(n2^K)\). At a
+its next coordinates remain at least half their previous values. Up to the
+polynomial iteration limit \(K\), all coordinates are therefore at least \(1/(n2^K)\). At a
 step whose exact output still has objective at least \(\varepsilon/2\),
 the objective along a sufficiently short rounding segment stays above
 \(\varepsilon/4\). On that region the gradient
@@ -245,8 +249,8 @@ has norm at most \(2^{\operatorname{poly}(n,B,K)}\). Hence rounding to
 \(2^{-\operatorname{poly}(n,B,K)}\) absolute accuracy changes the potential by
 less than \(1/48\). Approximation of the projected step to the same accuracy
 costs another \(1/48\), leaving a decrease of at least \(1/8\) per step.
-If the exact output instead has objective below \(\varepsilon/2\), choose
-the rounding accuracy also below
+If the exact output instead has objective below \(\varepsilon/2\), require
+the combined coordinate error from step approximation and rounding to be below
 \(\varepsilon/(2n\|c\|_\infty)\); its rounded objective is then at most
 \(\varepsilon\), and the algorithm stops.
 Compute a rational basis for the fixed affine feasible space by Gaussian

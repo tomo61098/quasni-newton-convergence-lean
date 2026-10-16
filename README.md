@@ -112,10 +112,11 @@ geometric divergence and objective bounds. A divergence that controls squared
 norm distance also gives convergence of the iterates. Proximal existence is
 proved separately in `QuasiNewtonConvergence/BregmanExistence.lean` for
 finite-dimensional spaces, continuous objectives with an affine lower bound,
-and strongly convex continuous kernels. It constructs a minimizer at each
-step and a full recursive trajectory. With a differentiable kernel whose
-gradient is the supplied map, minimization implies the variational optimality
-condition and gives an `O(1/k)` bound for the constructed trajectory. A separate
+and strongly convex continuous kernels. The recursive trajectory uses an
+affine support at every point of the objective, which also implies convexity.
+With a differentiable kernel whose gradient is the supplied map, minimization
+implies the variational optimality condition and gives an `O(1/k)` bound for
+the constructed trajectory. A separate
 existence theorem allows the proximal objective to change at every step.
 
 `QuasiNewtonConvergence/GradientDescent.lean` proves convergence of fixed-step
@@ -201,8 +202,9 @@ Hessian form of the BFGS update. The companion
 `bfgsUpdate_secant_of_curvature` derives its denominator conditions from a
 positive definite approximation and the curvature condition.
 Build with `lake build QuasiNewtonConvergence QuasiNewtonConvergence.AxiomAudit`.
-Then `lake env lean ProofAudit.lean` rejects unfinished proofs and any axiom
-dependency outside `propext`, `Classical.choice`, and `Quot.sound`.
+Then `lake env lean ProofAudit.lean` checks the declarations listed in that file,
+rejecting unfinished proofs and any transitive axiom dependency outside
+`propext`, `Classical.choice`, and `Quot.sound`.
 `lake env lean ProofAuditTests.lean` checks that the audit rejects both
 unfinished proofs and indirect dependencies on a custom axiom.
 This lemma is a foundation for the convergence proofs, not a proof of either

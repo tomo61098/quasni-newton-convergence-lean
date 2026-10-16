@@ -154,7 +154,7 @@ theorem logBarrier_full_newton_euclidean_residual_invariant
       xnew i * (t * c i - 1 / xnew i - q i) = e i := by
     rw [← hstationary i]
     field_simp [ne_of_gt (hxnew i)]
-    <;> ring
+    ring
   have hsumnonneg : 0 ≤ ∑ i, (d i / x i) ^ 2 :=
     Finset.sum_nonneg (fun i hi => sq_nonneg _)
   have hsum_sq : (∑ i, (d i / x i) ^ 2) ^ 2 ≤ (ρ ^ 2) ^ 2 :=
@@ -190,7 +190,7 @@ theorem logBarrier_projected_gradient_of_residual
     <;> ring
   have hqzero : U.starProjection
       (WithLp.toLp 2 (fun i => x i * q i)) = 0 :=
-    Submodule.starProjection_apply_eq_zero_iff.mpr horth
+    (Submodule.starProjection_apply_eq_zero_iff U).mpr horth
   rw [hdecomp, map_add, hqzero, add_zero]
   exact (U.norm_starProjection_apply_le _).trans he
 

@@ -8,8 +8,6 @@ import Mathlib.Analysis.Calculus.Deriv.Mul
 import Mathlib.Analysis.Calculus.Deriv.Slope
 import Mathlib.Analysis.Convex.Function
 
-set_option maxHeartbeats 10000
-
 /-!
 # Existence of finite-dimensional Bregman proximal steps
 
@@ -43,8 +41,9 @@ private theorem convexOn_of_affine_support (F : E → ℝ) (v : E → E)
   have hi : a * inner ℝ (v z) (x - z) + b * inner ℝ (v z) (y - z) = 0 := by
     rw [← real_inner_smul_right, ← real_inner_smul_right, ← inner_add_right, hv,
       inner_zero_right]
+  have hz : a * F z + b * F z = F z := by rw [← add_mul, hab, one_mul]
   change F z ≤ a * F x + b * F y
-  nlinarith
+  nlinarith only [hx, hy, hi, hz]
 
 /-- Minimizing the Bregman subproblem implies its variational optimality
 condition when the kernel has the stated gradient at the minimizer.
@@ -60,16 +59,17 @@ theorem bregmanProximalOptimality_of_minimizes
   let φ : ℝ → ℝ := fun t => t * (F u - F z) +
     L * (h (z + t • d) - h z - t * inner ℝ (dh x) d)
   have hpath : HasDerivAt (fun t : ℝ => z + t • d) d 0 := by
-    simpa using (hasDerivAt_const (0 : ℝ) z).add
-      ((hasDerivAt_id (0 : ℝ)).smul_const d)
+    convert ((hasDerivAt_id' (0 : ℝ)).smul_const d).const_add z using 1 <;> simp
   have hhpath : HasDerivAt (fun t : ℝ => h (z + t • d))
       (inner ℝ (dh z) d) 0 := by
-    simpa using hh.hasFDerivAt.comp_hasDerivAt_of_eq hpath (by simp)
+    simpa only [Function.comp_def, InnerProductSpace.toDual_apply_apply] using
+      hh.hasFDerivAt.comp_hasDerivAt_of_eq 0 hpath (by simp)
   have hφ : HasDerivAt φ
       (F u - F z + L * (inner ℝ (dh z) d - inner ℝ (dh x) d)) 0 := by
-    simpa [φ] using ((hasDerivAt_id (0 : ℝ)).mul_const (F u - F z)).add
+    convert ((hasDerivAt_id' (0 : ℝ)).mul_const (F u - F z)).add
       (((hhpath.sub_const (h z)).sub
-        ((hasDerivAt_id (0 : ℝ)).mul_const (inner ℝ (dh x) d))).const_mul L)
+        ((hasDerivAt_id' (0 : ℝ)).mul_const (inner ℝ (dh x) d))).const_mul L) using 1 <;>
+      simp [φ, funext_iff]
   have hφnonneg (t : ℝ) (ht0 : 0 ≤ t) (ht1 : t ≤ 1) : 0 ≤ φ t := by
     have hc := hF.2 (Set.mem_univ z) (Set.mem_univ u)
       (sub_nonneg.mpr ht1) ht0 (by ring : (1 - t) + t = 1)

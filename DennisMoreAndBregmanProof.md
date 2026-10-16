@@ -98,8 +98,10 @@ need not be symmetric.
 
 The Lean definitions use finite-valued functions and state exact variational
 optimality explicitly. `BregmanExistence.lean` constructs proximal minimizers
-under finite-dimensional continuity and strong-convexity assumptions. When the
-kernel is differentiable with the supplied gradient, it derives variational
-optimality from minimization and applies the rate theorem to the constructed
-trajectory. The differentiability assumption matters: the strong first-order
+under finite-dimensional continuity, an affine lower bound for the objective,
+and strong convexity of the kernel. The recursive trajectory supplies an
+affine support at every objective point, implying convexity. When the kernel
+is differentiable with the supplied gradient, minimization implies variational
+optimality and gives the rate theorem for that trajectory.
+The differentiability assumption matters: the strong first-order
 inequality alone also permits nonsmooth kernels with selected subgradients.
