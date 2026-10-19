@@ -80,6 +80,15 @@ smooth strong convexity supplies the minimizer and gives convergence of both
 iterates and objective values. See the
 [parameter and proof details](readmes/QuasiNewtonConvergence/NesterovTraditional.md).
 
+The same module also treats harmonic proximal FISTA steps with the usual
+momentum. Steps `1/(L*(k+1))` give
+`F(xₙ)-F(u) ≤ 2Ln‖x₀-u‖²/(n+1)²` for `n ≥ 1` and objective convergence.
+Literal steps `1/(k+1)` have an eventual `O(1/n)` objective bound and converge
+for every positive smoothness constant, even if finitely many initial steps
+exceed `1/L`. The proof starts its potential estimate at a later index and
+keeps the original momentum. Quadratic growth gives iterate convergence for
+both schedules; the smooth harmonic method is included as a special case.
+
 `QuasiNewtonConvergence/ProximalBFGS.lean` proves descent and summability of
 squared steps for variable-metric proximal updates, including BFGS metrics,
 under a uniform lower metric bound. An additional composite error bound yields
