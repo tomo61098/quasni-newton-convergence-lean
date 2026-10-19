@@ -1,6 +1,10 @@
-import QuasiNewtonConvergence.DennisMoreProximal
-import QuasiNewtonConvergence.BFGSGlobal
-import Mathlib.Topology.Algebra.InfiniteSum.Real
+module
+
+public import QuasiNewtonConvergence.DennisMoreProximal
+public import QuasiNewtonConvergence.BFGSGlobal
+public import Mathlib.Topology.Algebra.InfiniteSum.Real
+
+@[expose] public section
 
 /-!
 # The dissipative part of the Nocedal–Wright BFGS argument

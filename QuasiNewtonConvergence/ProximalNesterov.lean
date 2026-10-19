@@ -1,4 +1,8 @@
-import QuasiNewtonConvergence.ProximalGradient
+module
+
+public import QuasiNewtonConvergence.ProximalGradient
+
+@[expose] public section
 
 /-! The estimate-sequence proof for accelerated proximal gradient. -/
 
@@ -177,6 +181,7 @@ theorem proximalNesterov_quadratic_rate (f g : E → ℝ)
   field_simp at hbound ⊢
   nlinarith
 
+omit [InnerProductSpace ℝ E] in
 /-- Restarting an accelerated proximal run of length `N` gives a geometric
 rate whenever the composite objective has quadratic growth at its minimum.
 `hblock` is the bound furnished by `proximalNesterov_quadratic_rate` for each

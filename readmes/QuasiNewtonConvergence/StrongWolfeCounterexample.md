@@ -8,7 +8,7 @@ All scalar inequalities are over the indicated real, integer, or natural-number 
 
 Definitions from other modules: [BroydenUpdates](BroydenUpdates.md), [LineSearch](LineSearch.md).
 
-## Definition: `halfStepIterate` (private helper)
+## Definition: `halfStepIterate`
 
 [Source](../../QuasiNewtonConvergence/StrongWolfeCounterexample.lean#L17)
 

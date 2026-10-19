@@ -1,10 +1,14 @@
-import QuasiNewtonConvergence.KarmarkarProjective
-import Mathlib.Analysis.InnerProductSpace.Projection.Basic
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Algebra.Order.BigOperators.Ring.Finset
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Ring
+module
+
+public import QuasiNewtonConvergence.KarmarkarProjective
+public import Mathlib.Analysis.InnerProductSpace.Projection.Basic
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Algebra.Order.BigOperators.Ring.Finset
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
 
 /-!
 # A full Newton step for the logarithmic barrier
@@ -187,7 +191,7 @@ theorem logBarrier_projected_gradient_of_residual
     change t * x i * c i - 1 = e i + x i * q i
     rw [← hstationary i]
     field_simp [hx i]
-    <;> ring
+    ring
   have hqzero : U.starProjection
       (WithLp.toLp 2 (fun i => x i * q i)) = 0 :=
     (Submodule.starProjection_apply_eq_zero_iff U).mpr horth

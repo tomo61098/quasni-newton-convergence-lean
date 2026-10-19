@@ -70,6 +70,7 @@ mathematics uses `$...$`; display mathematics uses `$$...$$`.
 | [LogBarrierNewtonInvariant](LogBarrierNewtonInvariant.md) | 17 | Log-barrier Newton invariants |
 | [Nesterov](Nesterov.md) | 20 | Accelerated gradient methods |
 | [NesterovStrong](NesterovStrong.md) | 10 | Strongly convex acceleration |
+| [NesterovTraditional](NesterovTraditional.md) | 21 | Traditional FISTA parameters and convergence |
 | [Newton](Newton.md) | 4 | Newton convergence |
 | [Potential](Potential.md) | 2 | Scalar potential bounds |
 | [PrimalPathFollowing](PrimalPathFollowing.md) | 18 | Primal barrier path-following bounds |
@@ -82,4 +83,4 @@ mathematics uses `$...$`; display mathematics uses `$$...$$`.
 | [Subgradient](Subgradient.md) | 11 | Subgradient methods |
 | [WolfeGradientDescent](WolfeGradientDescent.md) | 3 | Gradient descent with Wolfe steps |
 
-Total: **371 declarations** across **30 modules**.
+Total: **392 declarations** across **31 modules**.

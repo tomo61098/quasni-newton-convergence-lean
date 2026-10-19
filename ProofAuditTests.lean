@@ -1,5 +1,9 @@
-import QuasiNewtonConvergence.AxiomAudit
-import Lean.Elab.GuardMsgs
+module
+
+public import QuasiNewtonConvergence.AxiomAudit
+public import Lean.Elab.GuardMsgs
+
+@[expose] public section
 
 /-! Regression checks for the audit command. Deliberately untrusted declarations
 live only in this test file, which is never imported by the library. -/

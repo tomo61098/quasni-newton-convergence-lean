@@ -1,6 +1,10 @@
-import Mathlib.Analysis.InnerProductSpace.Basic
-import Mathlib.Topology.Algebra.InfiniteSum.Real
-import Mathlib.Tactic.Linarith
+module
+
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.Topology.Algebra.InfiniteSum.Real
+public import Mathlib.Tactic.Linarith
+
+@[expose] public section
 
 /-!
 # Wolfe line searches and summable descent

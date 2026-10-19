@@ -1,9 +1,13 @@
-import QuasiNewtonConvergence.BroydenUpdates
-import Mathlib.LinearAlgebra.Trace
-import Mathlib.LinearAlgebra.Determinant
-import Mathlib.LinearAlgebra.Matrix.SchurComplement
-import Mathlib.Analysis.InnerProductSpace.Trace
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
+module
+
+public import QuasiNewtonConvergence.BroydenUpdates
+public import Mathlib.LinearAlgebra.Trace
+public import Mathlib.LinearAlgebra.Determinant
+public import Mathlib.LinearAlgebra.Matrix.SchurComplement
+public import Mathlib.Analysis.InnerProductSpace.Trace
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+
+@[expose] public section
 
 /-!
 # Finite-dimensional BFGS trace and determinant identities

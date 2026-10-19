@@ -1,9 +1,13 @@
-import Mathlib.Analysis.InnerProductSpace.Basic
-import Mathlib.Analysis.SpecificLimits.Basic
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.FieldSimp
-import QuasiNewtonConvergence.Potential
+module
+
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.Analysis.SpecificLimits.Basic
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Ring
+public import Mathlib.Tactic.FieldSimp
+public import QuasiNewtonConvergence.Potential
+
+@[expose] public section
 
 /-!
 # Fixed-step gradient descent

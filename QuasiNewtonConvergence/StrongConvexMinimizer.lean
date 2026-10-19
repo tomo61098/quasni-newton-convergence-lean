@@ -1,8 +1,12 @@
-import QuasiNewtonConvergence.GradientDescent
-import QuasiNewtonConvergence.DiminishingGradientDescent
-import QuasiNewtonConvergence.LineSearch
-import Mathlib.Topology.MetricSpace.Cauchy
-import Mathlib.Analysis.InnerProductSpace.Continuous
+module
+
+public import QuasiNewtonConvergence.GradientDescent
+public import QuasiNewtonConvergence.DiminishingGradientDescent
+public import QuasiNewtonConvergence.LineSearch
+public import Mathlib.Topology.MetricSpace.Cauchy
+public import Mathlib.Analysis.InnerProductSpace.Continuous
+
+@[expose] public section
 
 /-!
 # Existence of a minimizer for a smooth strongly convex objective

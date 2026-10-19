@@ -1,5 +1,9 @@
-import QuasiNewtonConvergence.DiminishingGradientDescent
-import Mathlib.Analysis.Asymptotics.SpecificAsymptotics
+module
+
+public import QuasiNewtonConvergence.DiminishingGradientDescent
+public import Mathlib.Analysis.Asymptotics.SpecificAsymptotics
+
+@[expose] public section
 
 /-!
 # Subgradient descent for convex objectives

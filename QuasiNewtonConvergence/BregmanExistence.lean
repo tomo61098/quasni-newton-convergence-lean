@@ -1,12 +1,16 @@
-import QuasiNewtonConvergence.Bregman
-import Mathlib.Topology.Order.Compact
-import Mathlib.Analysis.Normed.Module.FiniteDimension
-import Mathlib.Analysis.InnerProductSpace.Continuous
-import Mathlib.Analysis.Calculus.Gradient.Basic
-import Mathlib.Analysis.Calculus.Deriv.Comp
-import Mathlib.Analysis.Calculus.Deriv.Mul
-import Mathlib.Analysis.Calculus.Deriv.Slope
-import Mathlib.Analysis.Convex.Function
+module
+
+public import QuasiNewtonConvergence.Bregman
+public import Mathlib.Topology.Order.Compact
+public import Mathlib.Analysis.Normed.Module.FiniteDimension
+public import Mathlib.Analysis.InnerProductSpace.Continuous
+public import Mathlib.Analysis.Calculus.Gradient.Basic
+public import Mathlib.Analysis.Calculus.Deriv.Comp
+public import Mathlib.Analysis.Calculus.Deriv.Mul
+public import Mathlib.Analysis.Calculus.Deriv.Slope
+public import Mathlib.Analysis.Convex.Function
+
+@[expose] public section
 
 /-!
 # Existence of finite-dimensional Bregman proximal steps
@@ -22,6 +26,7 @@ namespace QuasiNewtonConvergence
 variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
   [FiniteDimensional ℝ E]
 
+omit [FiniteDimensional ℝ E] in
 /-- A global affine support at every point implies ordinary convexity;
 the supporting vector need not be a gradient. -/
 private theorem convexOn_of_affine_support (F : E → ℝ) (v : E → E)
@@ -59,7 +64,8 @@ theorem bregmanProximalOptimality_of_minimizes
   let φ : ℝ → ℝ := fun t => t * (F u - F z) +
     L * (h (z + t • d) - h z - t * inner ℝ (dh x) d)
   have hpath : HasDerivAt (fun t : ℝ => z + t • d) d 0 := by
-    convert ((hasDerivAt_id' (0 : ℝ)).smul_const d).const_add z using 1 <;> simp
+    convert ((hasDerivAt_id' (0 : ℝ)).smul_const d).const_add z using 1
+    simp
   have hhpath : HasDerivAt (fun t : ℝ => h (z + t • d))
       (inner ℝ (dh z) d) 0 := by
     simpa only [Function.comp_def, InnerProductSpace.toDual_apply_apply] using
@@ -68,8 +74,8 @@ theorem bregmanProximalOptimality_of_minimizes
       (F u - F z + L * (inner ℝ (dh z) d - inner ℝ (dh x) d)) 0 := by
     convert ((hasDerivAt_id' (0 : ℝ)).mul_const (F u - F z)).add
       (((hhpath.sub_const (h z)).sub
-        ((hasDerivAt_id' (0 : ℝ)).mul_const (inner ℝ (dh x) d))).const_mul L) using 1 <;>
-      simp [φ, funext_iff]
+        ((hasDerivAt_id' (0 : ℝ)).mul_const (inner ℝ (dh x) d))).const_mul L) using 1
+    simp
   have hφnonneg (t : ℝ) (ht0 : 0 ≤ t) (ht1 : t ≤ 1) : 0 ≤ φ t := by
     have hc := hF.2 (Set.mem_univ z) (Set.mem_univ u)
       (sub_nonneg.mpr ht1) ht0 (by ring : (1 - t) + t = 1)

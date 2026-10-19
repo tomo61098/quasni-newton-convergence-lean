@@ -1,5 +1,9 @@
-import QuasiNewtonConvergence.BFGSMatrix
-import QuasiNewtonConvergence.BFGSDennisMore
+module
+
+public import QuasiNewtonConvergence.BFGSMatrix
+public import QuasiNewtonConvergence.BFGSDennisMore
+
+@[expose] public section
 
 /-!
 # Directional Dennis–Moré from BFGS scalar potential data

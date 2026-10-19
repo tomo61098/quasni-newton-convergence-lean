@@ -1,5 +1,9 @@
-import Mathlib.Basic.Real.Basic
-import Mathlib.Tactic.Linarith
+module
+
+public import Mathlib.Basic.Real.Basic
+public import Mathlib.Tactic.Linarith
+
+@[expose] public section
 
 /-! Scalar potential bounds shared by the convergence proofs. -/
 

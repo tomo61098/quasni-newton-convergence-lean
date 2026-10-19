@@ -1,4 +1,8 @@
-import QuasiNewtonConvergence.Nesterov
+module
+
+public import QuasiNewtonConvergence.Nesterov
+
+@[expose] public section
 
 /-!
 # Constant-momentum Nesterov acceleration under strong convexity

@@ -1,4 +1,8 @@
-import QuasiNewtonConvergence.ProximalGradient
+module
+
+public import QuasiNewtonConvergence.ProximalGradient
+
+@[expose] public section
 
 /-!
 # Bregman gradient and proximal point methods

@@ -1,4 +1,8 @@
-import QuasiNewtonConvergence.GradientDescent
+module
+
+public import QuasiNewtonConvergence.GradientDescent
+
+@[expose] public section
 
 /-! Convergence of the composite proximal gradient method. The proximal
 optimality condition is stated in variational form, so it also applies to

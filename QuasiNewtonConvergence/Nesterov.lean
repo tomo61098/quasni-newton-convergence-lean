@@ -1,4 +1,8 @@
-import QuasiNewtonConvergence.StrongConvexMinimizer
+module
+
+public import QuasiNewtonConvergence.StrongConvexMinimizer
+
+@[expose] public section
 
 /-!
 # Accelerated gradient descent

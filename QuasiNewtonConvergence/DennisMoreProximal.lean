@@ -1,5 +1,9 @@
-import QuasiNewtonConvergence.ProximalBFGS
-import QuasiNewtonConvergence.Newton
+module
+
+public import QuasiNewtonConvergence.ProximalBFGS
+public import QuasiNewtonConvergence.Newton
+
+@[expose] public section
 
 /-!
 # Dennis–Moré superlinear convergence for proximal quasi-Newton steps

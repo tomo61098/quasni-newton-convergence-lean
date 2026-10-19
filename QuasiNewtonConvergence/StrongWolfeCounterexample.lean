@@ -1,5 +1,9 @@
-import QuasiNewtonConvergence.BroydenUpdates
-import QuasiNewtonConvergence.LineSearch
+module
+
+public import QuasiNewtonConvergence.BroydenUpdates
+public import QuasiNewtonConvergence.LineSearch
+
+@[expose] public section
 
 /-!
 # Strong Wolfe steps do not by themselves imply superlinear BFGS convergence
@@ -14,7 +18,8 @@ namespace QuasiNewtonConvergence
 
 open Filter
 
-private def halfStepIterate (k : ℕ) : ℝ := (1 / 2 : ℝ) ^ k
+/-- The explicit iterate sequence used in the public BFGS counterexample. -/
+def halfStepIterate (k : ℕ) : ℝ := (1 / 2 : ℝ) ^ k
 
 private theorem halfStepIterate_pos (k : ℕ) : 0 < halfStepIterate k :=
   pow_pos (by norm_num) k

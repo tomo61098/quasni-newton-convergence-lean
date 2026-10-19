@@ -68,6 +68,18 @@ quadratically growing FISTA weights. It derives quadratic weight growth from
 the exact weight equations. It also proves the geometric
 objective bound for fixed-length restarts under quadratic growth of `F`.
 
+`QuasiNewtonConvergence/NesterovTraditional.lean` instantiates the proximal
+accelerated rate with the traditional FISTA parameters
+`t₁ = 1`, `tₖ₊₁ = (1 + √(1 + 4tₖ²))/2`, `θₖ = 1/tₖ₊₁`, and step size `1/L`.
+It derives the exact weight equations and connects the three-sequence proof
+to the usual update `yₖ₊₁ = xₖ₊₁ + ((tₖ₊₁-1)/tₖ₊₂)(xₖ₊₁-xₖ)`.
+It proves the `2L‖x₀-u‖²/n²` composite objective bound and convergence of
+objective values, with convergence of iterates under quadratic growth.
+The smooth special case uses ordinary gradient steps. On a complete space,
+smooth strong convexity supplies the minimizer and gives convergence of both
+iterates and objective values. See the
+[parameter and proof details](readmes/QuasiNewtonConvergence/NesterovTraditional.md).
+
 `QuasiNewtonConvergence/ProximalBFGS.lean` proves descent and summability of
 squared steps for variable-metric proximal updates, including BFGS metrics,
 under a uniform lower metric bound. An additional composite error bound yields

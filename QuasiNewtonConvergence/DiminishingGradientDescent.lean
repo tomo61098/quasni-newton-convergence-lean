@@ -1,5 +1,9 @@
-import QuasiNewtonConvergence.GradientDescent
-import Mathlib.Analysis.Real.Sqrt
+module
+
+public import QuasiNewtonConvergence.GradientDescent
+public import Mathlib.Analysis.Real.Sqrt
+
+@[expose] public section
 
 /-!
 # Gradient descent with diminishing steps

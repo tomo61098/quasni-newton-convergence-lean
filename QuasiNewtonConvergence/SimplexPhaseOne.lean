@@ -1,6 +1,10 @@
-import QuasiNewtonConvergence.KarmarkarProjective
-import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import Mathlib.Tactic.Linarith
+module
+
+public import QuasiNewtonConvergence.KarmarkarProjective
+public import Mathlib.Algebra.Order.BigOperators.Group.Finset
+public import Mathlib.Tactic.Linarith
+
+@[expose] public section
 
 /-!
 # Phase I of the simplex method

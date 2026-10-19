@@ -1,5 +1,9 @@
-import Lean.Util.CollectAxioms
-import Lean.Elab.Command
+module
+
+public meta import Lean.Util.CollectAxioms
+public meta import Lean.Elab.Command
+
+public meta section
 
 /-! An enforcing axiom audit for public convergence results. -/
 

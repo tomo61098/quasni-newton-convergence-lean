@@ -1,6 +1,10 @@
-import QuasiNewtonConvergence.ProximalGradient
-import QuasiNewtonConvergence.BroydenUpdates
-import Mathlib.Topology.Algebra.InfiniteSum.Real
+module
+
+public import QuasiNewtonConvergence.ProximalGradient
+public import QuasiNewtonConvergence.BroydenUpdates
+public import Mathlib.Topology.Algebra.InfiniteSum.Real
+
+@[expose] public section
 
 /-! Variable-metric proximal steps, including steps with BFGS Hessian
 approximations. The rate hypotheses on the metrics are explicit: a BFGS

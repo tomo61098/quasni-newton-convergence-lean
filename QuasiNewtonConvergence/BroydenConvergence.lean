@@ -1,7 +1,11 @@
-import QuasiNewtonConvergence.BroydenUpdates
-import QuasiNewtonConvergence.LineSearch
-import QuasiNewtonConvergence.StrongConvexMinimizer
-import QuasiNewtonConvergence.Newton
+module
+
+public import QuasiNewtonConvergence.BroydenUpdates
+public import QuasiNewtonConvergence.LineSearch
+public import QuasiNewtonConvergence.StrongConvexMinimizer
+public import QuasiNewtonConvergence.Newton
+
+@[expose] public section
 
 /-!
 # Conditional line-search convergence for quasi-Newton directions
