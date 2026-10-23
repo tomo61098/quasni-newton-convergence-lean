@@ -55,6 +55,42 @@ projection-to-Newton-direction bridge remain outside Lean.
 
 ## Current formalized results
 
+`QuasiNewtonConvergence/SignGradient.lean` proves convergence of ordinary
+deterministic signGD, whose update uses only the exact coordinate signs.
+It proves that the sign vector is the exact Frank–Wolfe oracle on a box;
+ordinary signGD is a Frank–Wolfe step on a box centered at the current iterate.
+For convex smooth objectives with a uniform bound `‖xₖ-u‖∞ ≤ R`, steps
+`2R/(k+2)` inherit the Frank–Wolfe objective bound `2nLR²/(k+2)` for `k ≥ 1`.
+For smooth strongly convex objectives, steps `1/√(k+1)` give convergence of
+both objective values and iterates without an assumed iterate bound or a
+supplied minimizer. The proof bounds the objective errors first. The
+recursively defined trajectory is included. See the
+[precise assumptions and proof](readmes/QuasiNewtonConvergence/SignGradient.md).
+
+`QuasiNewtonConvergence/FrankWolfe.lean` proves convergence of the exact
+Frank–Wolfe method with steps `2/(k+2)` on a bounded convex feasible set.
+The supplied gradient satisfies the convex first-order lower inequality and
+the `L`-smooth upper inequality on that set. With diameter bound `D`, the
+last-iterate objective gap is at most `2 L D²/(k+2)` for `k ≥ 1`, and the
+objective values converge to the constrained minimum. The proof derives
+feasibility, an oracle-gap certificate, and the error recurrence from the
+actual updates. Compactness supplies exact linear oracle choices, a run from
+any feasible start, and a minimizer for a continuous objective; `ofCompact`
+uses the set's diameter directly. A quadratic growth condition also gives
+convergence of the iterates. See the
+[statements and mathematical proof](readmes/QuasiNewtonConvergence/FrankWolfe.md).
+
+`FrankWolfeAnalysis.lean` derives the first-order inequalities from `ConvexOn`,
+genuine `HasGradientAt` derivatives, and a gradient that is Lipschitz on the
+feasible set, on a complete real inner product space. Its end-to-end theorem
+constructs an exact line-search run from any feasible starting point on a
+compact set and proves the same objective rate and convergence.
+`FrankWolfeLineSearch.lean` allows arbitrary steps in `[0,1]`, proves generic
+descent, and shows that exact line search achieves the prescribed-step rate
+with monotone objective values. Its construction selects step zero when the
+oracle gap is zero; the stopping theorem proves that every later iterate
+then equals the current one, including when oracle ties change.
+
 `QuasiNewtonConvergence/ProximalGradient.lean` treats a composite objective
 `F = f + g`, where `f` has an `L`-smooth convex gradient and the exact
 proximal subproblem satisfies its variational optimality condition. It proves

@@ -7,8 +7,12 @@ public import QuasiNewtonConvergence.BroydenConvergence
 public import QuasiNewtonConvergence.BFGSGlobal
 public import QuasiNewtonConvergence.BFGSMatrix
 public import QuasiNewtonConvergence.GradientDescent
+public import QuasiNewtonConvergence.FrankWolfe
+public import QuasiNewtonConvergence.FrankWolfeLineSearch
+public import QuasiNewtonConvergence.FrankWolfeAnalysis
 public import QuasiNewtonConvergence.DiminishingGradientDescent
 public import QuasiNewtonConvergence.Subgradient
+public import QuasiNewtonConvergence.SignGradient
 public import QuasiNewtonConvergence.Nesterov
 public import QuasiNewtonConvergence.NesterovStrong
 public import QuasiNewtonConvergence.Newton

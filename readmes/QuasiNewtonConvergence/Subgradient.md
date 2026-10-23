@@ -110,7 +110,7 @@ $$
 \forall \varepsilon\in \mathbb{R},\quad 0 < \varepsilon \Longrightarrow \left(\exists N\in\mathbb N,\ \forall n\ge N,\quad \exists k < n,\quad 0 \le f\left(x\left(k\right)\right) - f\left(x_\star\right) \land f\left(x\left(k\right)\right) - f\left(x_\star\right) < \varepsilon\right)
 $$
 
-## Theorem: `scalar_subgradient_decay` (private helper)
+## Theorem: `scalar_subgradient_decay`
 
 [Source](../../QuasiNewtonConvergence/Subgradient.lean#L175)
 

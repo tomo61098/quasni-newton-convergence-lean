@@ -5,6 +5,7 @@ Markdown document with the same stem. Definitions, structures, and all
 top-level theorem and lemma statements are included, including private helpers.
 Proofs, tactic scripts, and programming implementation details are omitted.
 Only this source folder is covered.
+The FrankWolfe companion additionally includes a mathematical proof.
 
 Open these files in a Markdown viewer with MathJax or KaTeX support. Inline
 mathematics uses `$...$`; display mathematics uses `$$...$$`.
@@ -62,6 +63,9 @@ mathematics uses `$...$`; display mathematics uses `$$...$$`.
 | [BroydenUpdates](BroydenUpdates.md) | 50 | Quasi-Newton update formulas |
 | [DennisMoreProximal](DennisMoreProximal.md) | 14 | Smooth and proximal Dennis–Moré conditions |
 | [DiminishingGradientDescent](DiminishingGradientDescent.md) | 16 | Diminishing-step gradient descent |
+| [FrankWolfe](FrankWolfe.md) | 12 | Conditional gradient convergence |
+| [FrankWolfeAnalysis](FrankWolfeAnalysis.md) | 3 | Analytical hypotheses and end-to-end convergence |
+| [FrankWolfeLineSearch](FrankWolfeLineSearch.md) | 12 | Variable steps, exact line search, and stopping |
 | [GradientDescent](GradientDescent.md) | 16 | Fixed-step gradient descent |
 | [KarmarkarBitBounds](KarmarkarBitBounds.md) | 11 | Integer gaps and bit bounds |
 | [KarmarkarProjection](KarmarkarProjection.md) | 13 | Projected directions and step bounds |
@@ -81,6 +85,7 @@ mathematics uses `$...$`; display mathematics uses `$$...$$`.
 | [StrongConvexMinimizer](StrongConvexMinimizer.md) | 9 | Strongly convex minimizers |
 | [StrongWolfeCounterexample](StrongWolfeCounterexample.md) | 6 | Strong Wolfe counterexample |
 | [Subgradient](Subgradient.md) | 11 | Subgradient methods |
+| [SignGradient](SignGradient.md) | 17 | Sign-only descent and the Frank–Wolfe box oracle |
 | [WolfeGradientDescent](WolfeGradientDescent.md) | 3 | Gradient descent with Wolfe steps |
 
 Total: **407 declarations** across **31 modules**.

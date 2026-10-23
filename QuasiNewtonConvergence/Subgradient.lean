@@ -176,7 +176,7 @@ theorem subgradient_sqrt_best_eventually (f : E → ℝ) (x g : ℕ → E)
   exact ⟨k, hk, sub_nonneg.mpr (hmin (x k)), hgap⟩
 
 /-- A scalar decay lemma for nonsummable steps whose sizes tend to zero. -/
-private theorem scalar_subgradient_decay (e α : ℕ → ℝ) (c B : ℝ)
+theorem scalar_subgradient_decay (e α : ℕ → ℝ) (c B : ℝ)
     (hc : 0 < c) (hB : 0 ≤ B)
     (he : ∀ k, 0 ≤ e k) (hα : ∀ k, 0 ≤ α k)
     (hzero : Filter.Tendsto α Filter.atTop (nhds 0))
